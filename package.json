@@ -2,6 +2,7 @@
   "name": "ttrpg-helper",
   "private": true,
   "scripts": {
+    "preinstall": "npx only-allow pnpm",
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
@@ -15,6 +16,13 @@
   },
   "packageManager": "pnpm@8.9.0",
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "pnpm": ">=8"
+  },
+  "author": "ryinner",
+  "bugs": {
+    "url": "https://github.com/ryinner/ttrpg-helper/issues"
   }
+  ,
+  "homepage": "https://github.com/ryinner/ttrpg-helper#readme"
 }
