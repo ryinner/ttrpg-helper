@@ -1,19 +1,19 @@
 import type { Config } from "tailwindcss";
 
 const config: Partial<Config> = {
-  darkMode: ['class'],
+  darkMode: ["class"],
   theme: {
     extend: {
       screens: {
-        print: { raw: 'print' },
-        screen: { raw: 'screen' },
+        print: { raw: "print" },
+        screen: { raw: "screen" },
       },
       gridTemplateRows: {
-        web: 'auto 1fr auto'
-      }
-    }
+        web: "auto 1fr auto",
+      },
+    },
   },
-  plugins: []
-}
+  plugins: [],
+};
 
 export default config;
