@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import TheHeader from "../components/Layout/TheHeader";
 import TheFooter from "../components/Layout/TheFooter";
-import TheContent from "../components/Layout/TheContent";
+import TheMain from "../components/Layout/TheMain";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} web-grid web-grid-rows-web`}>
         <TheHeader />
-        <TheContent>{children}</TheContent>
+        <TheMain>{children}</TheMain>
         <TheFooter />
       </body>
     </html>
