@@ -7,6 +7,9 @@ const config: Partial<Config> = {
       screens: {
         print: { raw: 'print' },
         screen: { raw: 'screen' },
+      },
+      gridTemplateRows: {
+        web: 'auto 1fr auto'
       }
     }
   },

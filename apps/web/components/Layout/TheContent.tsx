@@ -1,7 +1,7 @@
 import type React from 'react';
 
 export default function TheContent ({ children }: Props) {
-  return <main>
+  return <main className='web-bg-slate-900'>
     {children}
   </main>
 }

@@ -1,3 +1,3 @@
 export default function TheFooter() {
-  return <footer></footer>
+  return <footer className='web-bg-slate-900'></footer>
 }
