@@ -1,9 +1,9 @@
 export default {
   app: {
     name: "НРИ Помощник",
-    description: 'Тестовый набросок приложения'
+    description: "Тестовый набросок приложения",
   },
   nav: {
-    cardsGenerator: "Генератор карточек"
+    cardsGenerator: "Генератор карточек",
   },
 } as const;

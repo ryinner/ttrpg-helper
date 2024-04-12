@@ -1,5 +1,5 @@
 export default {
   app: {
-    name: 'TTRPG Helper'
+    name: "TTRPG Helper",
   },
 } as const;

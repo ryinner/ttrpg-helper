@@ -5,16 +5,16 @@ import { Inter } from "next/font/google";
 import TheHeader from "../../components/Layout/TheHeader";
 import TheFooter from "../../components/Layout/TheFooter";
 import TheMain from "../../components/Layout/TheMain";
-import { getI18n } from '../../locales/server';
+import { getI18n } from "../../locales/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getI18n();
   return {
-    title: t('app.name'),
-    description: t('app.description'),
-  }
+    title: t("app.name"),
+    description: t("app.description"),
+  };
 }
 
 export default function RootLayout({
@@ -22,7 +22,7 @@ export default function RootLayout({
   params: { locale },
 }: {
   children: React.ReactNode;
-  params: LayoutParams
+  params: LayoutParams;
 }): JSX.Element {
   return (
     <html lang={locale}>
@@ -37,4 +37,5 @@ export default function RootLayout({
 
 export interface LayoutParams {
   locale: string;
+  [key: string]: string | string[];
 }

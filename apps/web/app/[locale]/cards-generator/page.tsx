@@ -1,7 +1,9 @@
-import TheContent from '../../../components/Layout/TheContent';
+import TheContent from "../../../components/Layout/TheContent";
 
 export default function CardsGenerator() {
-  return <TheContent>
-    <div></div>
-  </TheContent>
+  return (
+    <TheContent>
+      <div></div>
+    </TheContent>
+  );
 }
