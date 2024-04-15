@@ -18,7 +18,7 @@ module.exports = {
     node: true,
     browser: true,
   },
-  plugins: ["only-warn"],
+  plugins: ["only-warn", "@typescript-eslint",],
   settings: {
     "import/resolver": {
       typescript: {
@@ -26,10 +26,26 @@ module.exports = {
       },
     },
   },
+  parser: "@typescript-eslint/parser",
   ignorePatterns: [
     // Ignore dotfiles
     ".*.js",
     "node_modules/",
   ],
   overrides: [{ files: ["*.js?(x)", "*.ts?(x)"] }],
+  rules: {
+    "no-unused-vars": 'off',
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        args: "all",
+        argsIgnorePattern: "^_",
+        caughtErrors: "all",
+        caughtErrorsIgnorePattern: "^_",
+        destructuredArrayIgnorePattern: "^_",
+        varsIgnorePattern: "^_",
+        ignoreRestSiblings: true
+      }
+    ]
+  }
 };

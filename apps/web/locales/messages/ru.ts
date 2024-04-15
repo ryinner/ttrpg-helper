@@ -12,6 +12,11 @@ export default {
     },
     buttons: {
       apply: "Применить"
+    },
+    cardsGenerationSettings: {
+      width: 'Ширина мм',
+      height: 'Длина мм',
+      gap: 'Отступ мм'
     }
   }
 } as const;
