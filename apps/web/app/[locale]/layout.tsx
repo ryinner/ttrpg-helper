@@ -6,6 +6,7 @@ import TheHeader from "../../components/Layout/TheHeader";
 import TheFooter from "../../components/Layout/TheFooter";
 import TheMain from "../../components/Layout/TheMain";
 import { getI18n } from "../../locales/server";
+import I18nProvider from "../../components/Providers/I18nProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,9 +28,11 @@ export default function RootLayout({
   return (
     <html lang={locale}>
       <body className={`${inter.className} web-grid web-grid-rows-web`}>
-        <TheHeader />
-        <TheMain>{children}</TheMain>
-        <TheFooter />
+        <I18nProvider>
+          <TheHeader />
+          <TheMain>{children}</TheMain>
+          <TheFooter />
+        </I18nProvider>
       </body>
     </html>
   );

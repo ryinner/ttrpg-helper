@@ -6,4 +6,12 @@ export default {
   nav: {
     cardsGenerator: "Cards Generator",
   },
+  form: {
+    errors: {
+      required: "Field {name} is required",
+    },
+    buttons: {
+      apply: "Apply"
+    }
+  }
 } as const;
