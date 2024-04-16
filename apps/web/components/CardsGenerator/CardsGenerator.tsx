@@ -1,15 +1,5 @@
-export default function CardsGenerator ({ settings }: Props): React.ReactNode {
+export default function CardsGenerator (): React.ReactNode {
   return <div>
     
   </div>
-}
-
-interface Props {
-  settings: Settings
-}
-
-export interface Settings {
-  width: number;
-  height: number;
-  gap: number;
 }

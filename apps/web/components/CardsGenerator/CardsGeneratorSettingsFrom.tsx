@@ -5,29 +5,22 @@ import type React from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { useI18n } from "../../locales/client";
 import { Button } from "@repo/ui/button";
-import type { Settings } from './CardsGenerator';
+import { useCardsGeneratorContext, type Settings } from './CardsGeneratorProvider';
 
-export const defaultSettings = {
-  width: 16,
-  height: 16,
-  gap: 10
-} as const;
-
-export default function CardsGeneratorSettingsFrom({ onChangeSettings }: Props): React.ReactNode {
+export default function CardsGeneratorSettingsFrom(): React.ReactNode {
   const t = useI18n();
+  const { settings, setSettings } = useCardsGeneratorContext();
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Settings>({
-    defaultValues: defaultSettings,
+    defaultValues: settings,
   });
 
   const onSubmit: SubmitHandler<Settings> = (data, e) => {
     e?.preventDefault();
-    onChangeSettings({
-      data
-    });
+    setSettings(() => data);
   };
 
   return (
@@ -72,11 +65,5 @@ export default function CardsGeneratorSettingsFrom({ onChangeSettings }: Props):
     </form>
   );
 }
-
-interface Props {
-  onChangeSettings: changeSettingsHandler;
-}
-
-export type changeSettingsHandler = (e: { data: Settings }) => void;
 
 
