@@ -8,7 +8,7 @@ export default function Page() {
     <TheContent>
       <CardsGeneratorProvider>
         <CardsGeneratorSettingsFrom />
-        <CardsGenerator />
+        <CardsGenerator className='web-py-4' />
       </CardsGeneratorProvider>
     </TheContent>
   );

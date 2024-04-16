@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useState, type ReactNode, type SetStateAction, type Dispatch } from 'react';
 
 const defaultSettings = {
