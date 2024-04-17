@@ -1,6 +1,12 @@
 "use client";
 
-import { EditorContent, useEditor, type JSONContent } from "@tiptap/react";
+import {
+  BubbleMenu,
+  EditorContent,
+  FloatingMenu,
+  useEditor,
+  type JSONContent,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import type { CSSProperties, ReactNode } from "react";
 
@@ -14,8 +20,9 @@ export default function TipTap({
     extensions: [StarterKit],
     editorProps: {
       attributes: {
-        class: "web-outline-none focus:web-outline-none web-h-full web-overflow-hidden"
-      }
+        class:
+          "web-outline-none focus:web-outline-none web-h-full web-overflow-hidden",
+      },
     },
     content,
     onBlur: () => {
@@ -25,7 +32,21 @@ export default function TipTap({
     },
   });
 
-  return <EditorContent className={className} style={style} editor={editor} />;
+  return (
+    <>
+      <EditorContent className={className} style={style} editor={editor} />
+      {editor && (
+        <>
+          <BubbleMenu editor={editor}>
+            <div>Bold</div>
+          </BubbleMenu>
+          <FloatingMenu>
+            <div>Heading</div>
+          </FloatingMenu>
+        </>
+      )}
+    </>
+  );
 }
 
 interface Props {
