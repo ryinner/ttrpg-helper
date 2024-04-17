@@ -23,7 +23,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
         {cards.map((c) => <li key={c.id ?? c.title}>
           <article>
             <h2 className='web-text-indigo-200'>{c.title}</h2>
-            <TipTap content={c.description} />
+            <TipTap className='web-text-indigo-200' content={c.description} />
           </article>
         </li>)}
     </ul>
