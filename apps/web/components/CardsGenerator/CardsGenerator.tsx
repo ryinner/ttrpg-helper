@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
+import TipTap from '../TipTap/TipTap';
+import type { JSONContent } from '@tiptap/core';
 
 const testCard = {
-  title: 'Тест'
+  title: 'Тест',
+  description: 'Тест'
 }
 
 export default function CardsGenerator({ className }: Props): React.ReactNode {
@@ -20,6 +23,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
         {cards.map((c) => <li key={c.id ?? c.title}>
           <article>
             <h2 className='web-text-indigo-200'>{c.title}</h2>
+            <TipTap content={c.description} />
           </article>
         </li>)}
     </ul>
@@ -33,4 +37,5 @@ interface Props {
 interface Card {
   id?: number;
   title: string;
+  description: JSONContent | string;
 }

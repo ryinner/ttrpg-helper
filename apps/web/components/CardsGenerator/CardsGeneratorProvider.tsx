@@ -3,8 +3,8 @@
 import { createContext, useContext, useState, type ReactNode, type SetStateAction, type Dispatch } from 'react';
 
 const defaultSettings = {
-  width: 16,
-  height: 16,
+  width: 25,
+  height: 25,
   gap: 10
 }
 
