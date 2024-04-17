@@ -5,7 +5,7 @@ import { CardsGeneratorProvider } from '../../../components/CardsGenerator/Cards
 
 export default function Page() {
   return (
-    <TheContent>
+    <TheContent className='print:web-w-full'>
       <CardsGeneratorProvider>
         <CardsGeneratorSettingsFrom />
         <CardsGenerator className='web-py-4' />

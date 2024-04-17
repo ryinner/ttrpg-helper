@@ -14,7 +14,7 @@ export default function TipTap({
     extensions: [StarterKit],
     editorProps: {
       attributes: {
-        class: "web-outline-none focus:web-outline-none"
+        class: "web-outline-none focus:web-outline-none web-h-full web-overflow-hidden"
       }
     },
     content,

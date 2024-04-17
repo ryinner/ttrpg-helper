@@ -31,7 +31,7 @@ export default function CardsGeneratorSettingsFrom(): React.ReactNode {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="web-flex web-gap-3 web-items-end"
+      className="web-flex web-gap-3 web-items-end print:web-hidden"
     >
       {fields.map((f) => (
         <label className="web-text-indigo-100" key={f}>

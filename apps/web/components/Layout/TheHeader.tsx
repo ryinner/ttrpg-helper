@@ -15,7 +15,7 @@ export default async function TheHeader() {
   const t = await getI18n();
 
   return (
-    <header className="web-bg-slate-900 web-text-slate-300 web-py-4">
+    <header className="web-bg-slate-900 web-text-slate-300 web-py-4 print:web-hidden">
       <TheContent className="web-flex web-justify-between">
         <TheLogo />
         <TheNavigation>
