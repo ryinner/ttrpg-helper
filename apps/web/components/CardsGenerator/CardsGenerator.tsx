@@ -13,6 +13,14 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   const [cards, setCards] = useState<Card[]>([testCard]);
   const { settings } = useCardsGeneratorContext();
 
+  // function addCard(): void {
+  //   setCards(() => [...cards, { description: "" }]);
+  // }
+
+  function removeCard(card: Card): void {
+    setCards(() => cards.filter((c) => c !== card));
+  }
+
   return (
     <section className={className}>
       <ul
@@ -25,7 +33,13 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
       >
         {cards.map((c) => (
           <li key={c.id}>
-            <article className="web-h-full">
+            <article className="web-h-full web-relative">
+              <div
+                className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web--translate-y-2 web-translate-x-1 web-flex web-align-center web-justify-center web-cursor-pointer"
+                onClick={() => removeCard(c)}
+              >
+                X
+              </div>
               <TipTap
                 style={{
                   padding: `${settings.padding}mm`,
