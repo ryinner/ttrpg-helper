@@ -3,9 +3,10 @@
 import { createContext, useContext, useState, type ReactNode, type SetStateAction, type Dispatch } from 'react';
 
 const defaultSettings = {
-  width: 25,
-  height: 25,
-  gap: 10
+  width: 100,
+  height: 125,
+  gap: 10,
+  padding: 1.5
 }
 
 export const CardsGeneratorContext = createContext<{
@@ -36,4 +37,5 @@ export interface Settings {
   width: number;
   height: number;
   gap: number;
+  padding: number;
 }

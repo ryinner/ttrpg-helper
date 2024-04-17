@@ -16,7 +16,8 @@ export default {
     cardsGenerationSettings: {
       width: 'Ширина мм',
       height: 'Длина мм',
-      gap: 'Отступ мм'
+      gap: 'Отступ мм',
+      padding: 'Внутренний отступ мм'
     }
   }
 } as const;

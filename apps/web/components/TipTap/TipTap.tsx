@@ -2,15 +2,21 @@
 
 import { EditorContent, useEditor, type JSONContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 
 export default function TipTap({
   className,
+  style,
   content = "",
   onBlur,
 }: Props): ReactNode {
   const editor = useEditor({
     extensions: [StarterKit],
+    editorProps: {
+      attributes: {
+        class: "web-outline-none focus:web-outline-none"
+      }
+    },
     content,
     onBlur: () => {
       if (editor && onBlur) {
@@ -19,10 +25,11 @@ export default function TipTap({
     },
   });
 
-  return <EditorContent className={className} editor={editor} />;
+  return <EditorContent className={className} style={style} editor={editor} />;
 }
 
 interface Props {
+  style?: CSSProperties;
   className?: string;
   content?: string | JSONContent;
   onBlur?: (content: JSONContent) => void;
