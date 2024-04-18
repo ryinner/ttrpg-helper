@@ -19,5 +19,11 @@ export default {
       gap: 'Отступ мм',
       padding: 'Внутренний отступ мм'
     }
+  },
+  tipTap: {
+    placeholder: {
+      writeTitle: 'Назовите этой карты',
+      writeContent: 'Опишите карту'
+    }
   }
 } as const;

@@ -6,7 +6,7 @@ import TipTap from "../TipTap/TipTap";
 import type { JSONContent } from "@tiptap/core";
 
 const testCard = {
-  description: "Тест",
+  description: "",
 };
 
 export default function CardsGenerator({ className }: Props): React.ReactNode {
