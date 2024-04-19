@@ -2,10 +2,14 @@
 
 import { useState } from "react";
 import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
-import CardsGeneratorEditor, { type Card, type RemoveCardHandler } from './CardsGeneratorEditor';
+import CardsGeneratorEditor, {
+  type Card,
+  type RemoveCardHandler,
+  type UpdateCardHandler,
+} from "./CardsGeneratorEditor";
 
 const testCard = {
-  description: "<h1 style=\"text-align: center\"></h1>",
+  description: '<h1 style="text-align: center"></h1>',
 };
 
 export default function CardsGenerator({ className }: Props): React.ReactNode {
@@ -16,9 +20,13 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   //   setCards(() => [...cards, { description: "" }]);
   // }
 
+  const updateCard: UpdateCardHandler = (card) => {
+    setCards(() => cards.map((c) => c !== card ? c : card));
+  } 
+
   const removeCard: RemoveCardHandler = (card) => {
     setCards(() => cards.filter((c) => c !== card));
-  }
+  };
 
   return (
     <section className={className}>
@@ -32,7 +40,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
       >
         {cards.map((c) => (
           <li key={c.id}>
-            <CardsGeneratorEditor card={c} onRemove={removeCard} />
+            <CardsGeneratorEditor card={c} onRemove={removeCard} onUpdate={updateCard} />
           </li>
         ))}
       </ul>
@@ -43,4 +51,3 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
 interface Props {
   className: string;
 }
-

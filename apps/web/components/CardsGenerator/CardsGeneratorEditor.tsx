@@ -2,8 +2,13 @@ import type { JSONContent } from "@tiptap/core";
 import TipTap from '../TipTap/TipTap';
 import { useCardsGeneratorContext } from './CardsGeneratorProvider';
 
-export default function CardsGeneratorEditor({ card, onRemove }: Props) {
+export default function CardsGeneratorEditor({ card, onRemove, onUpdate }: Props) {
   const { settings } = useCardsGeneratorContext();
+
+  function updateCardContent (content: JSONContent) {
+    card.description = content;
+    onUpdate(card);
+  }
 
   return (
     <article className="web-h-full web-relative">
@@ -19,6 +24,7 @@ export default function CardsGeneratorEditor({ card, onRemove }: Props) {
         }}
         className="web-text-indigo-200 web-border-2 web-border-indigo-400 web-border-solid web-h-full"
         content={card.description}
+        onBlur={updateCardContent}
       />
     </article>
   );
@@ -27,9 +33,11 @@ export default function CardsGeneratorEditor({ card, onRemove }: Props) {
 interface Props {
   card: Card;
   onRemove: RemoveCardHandler;
+  onUpdate: UpdateCardHandler;
 }
 
 export type RemoveCardHandler = (e: Card) => void;
+export type UpdateCardHandler = (e: Card) => void;
 
 export interface Card {
   id?: number;
