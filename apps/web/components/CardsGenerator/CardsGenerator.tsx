@@ -5,7 +5,7 @@ import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
 import CardsGeneratorEditor, { type Card, type RemoveCardHandler } from './CardsGeneratorEditor';
 
 const testCard = {
-  description: "",
+  description: "<h1 style=\"text-align: center\"></h1>",
 };
 
 export default function CardsGenerator({ className }: Props): React.ReactNode {

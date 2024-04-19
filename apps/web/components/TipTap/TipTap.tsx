@@ -14,6 +14,10 @@ import {
 import StarterKit from "@tiptap/starter-kit";
 import type { CSSProperties, ReactNode } from "react";
 import {
+  FaAlignCenter,
+  FaAlignJustify,
+  FaAlignLeft,
+  FaAlignRight,
   FaBold,
   FaItalic,
   FaListOl,
@@ -21,6 +25,7 @@ import {
   FaStrikethrough,
 } from "react-icons/fa";
 import { useI18n } from "../../locales/client";
+import TextAlign from '@tiptap/extension-text-align';
 
 export default function TipTap({
   className,
@@ -58,6 +63,9 @@ export default function TipTap({
           return t("tipTap.placeholder.writeContent");
         },
       }),
+      TextAlign.configure({
+        types: ["heading", "paragraph"],
+      })
     ],
     editorProps: {
       attributes: {
@@ -90,6 +98,18 @@ export default function TipTap({
             />
             <FaStrikethrough
               onClick={() => editor.chain().focus().toggleMark("strike").run()}
+            />
+            <FaAlignLeft
+              onClick={() => editor.chain().focus().setTextAlign('left').run()}
+            />
+            <FaAlignCenter
+              onClick={() => editor.chain().focus().setTextAlign('center').run()}
+            />
+            <FaAlignRight
+              onClick={() => editor.chain().focus().setTextAlign('right').run()}
+            />
+            <FaAlignJustify
+              onClick={() => editor.chain().focus().setTextAlign('justify').run()}
             />
           </BubbleMenu>
           <FloatingMenu
