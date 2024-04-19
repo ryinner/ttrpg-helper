@@ -9,7 +9,7 @@ import CardsGeneratorEditor, {
 } from "./CardsGeneratorEditor";
 
 const testCard = {
-  description: '<h1 style="text-align: center"></h1>',
+  description: '<h1 style="text-align: center"></h1><p style="text-align: left"></p>',
 };
 
 export default function CardsGenerator({ className }: Props): React.ReactNode {

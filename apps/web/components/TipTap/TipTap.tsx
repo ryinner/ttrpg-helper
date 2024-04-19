@@ -25,7 +25,7 @@ import {
   FaStrikethrough,
 } from "react-icons/fa";
 import { useI18n } from "../../locales/client";
-import TextAlign from '@tiptap/extension-text-align';
+import TextAlign from "@tiptap/extension-text-align";
 
 export default function TipTap({
   className,
@@ -65,7 +65,7 @@ export default function TipTap({
       }),
       TextAlign.configure({
         types: ["heading", "paragraph"],
-      })
+      }),
     ],
     editorProps: {
       attributes: {
@@ -100,28 +100,40 @@ export default function TipTap({
               onClick={() => editor.chain().focus().toggleMark("strike").run()}
             />
             <FaAlignLeft
-              onClick={() => editor.chain().focus().setTextAlign('left').run()}
+              onClick={() => editor.chain().focus().setTextAlign("left").run()}
             />
             <FaAlignCenter
-              onClick={() => editor.chain().focus().setTextAlign('center').run()}
+              onClick={() =>
+                editor.chain().focus().setTextAlign("center").run()
+              }
             />
             <FaAlignRight
-              onClick={() => editor.chain().focus().setTextAlign('right').run()}
+              onClick={() => editor.chain().focus().setTextAlign("right").run()}
             />
             <FaAlignJustify
-              onClick={() => editor.chain().focus().setTextAlign('justify').run()}
+              onClick={() =>
+                editor.chain().focus().setTextAlign("justify").run()
+              }
             />
           </BubbleMenu>
           <FloatingMenu
             editor={editor}
             className="web-flex web-text-indigo-200 web-gap-2"
           >
-            <FaListUl
-              onClick={() => editor.chain().focus().toggleBulletList().run()}
-            />
-            <FaListOl
-              onClick={() => editor.chain().focus().toggleOrderedList().run()}
-            />
+            {!editor.isActive("heading") && (
+              <>
+                <FaListUl
+                  onClick={() =>
+                    editor.chain().focus().toggleBulletList().run()
+                  }
+                />
+                <FaListOl
+                  onClick={() =>
+                    editor.chain().focus().toggleOrderedList().run()
+                  }
+                />
+              </>
+            )}
           </FloatingMenu>
         </>
       )}
