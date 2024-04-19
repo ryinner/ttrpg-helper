@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
-import TipTap from "../TipTap/TipTap";
-import type { JSONContent } from "@tiptap/core";
+import CardsGeneratorEditor, { type Card, type RemoveCardHandler } from './CardsGeneratorEditor';
 
 const testCard = {
   description: "",
@@ -17,7 +16,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   //   setCards(() => [...cards, { description: "" }]);
   // }
 
-  function removeCard(card: Card): void {
+  const removeCard: RemoveCardHandler = (card) => {
     setCards(() => cards.filter((c) => c !== card));
   }
 
@@ -33,21 +32,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
       >
         {cards.map((c) => (
           <li key={c.id}>
-            <article className="web-h-full web-relative">
-              <div
-                className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web--translate-y-2 web-translate-x-1 web-flex web-align-center web-justify-center web-cursor-pointer"
-                onClick={() => removeCard(c)}
-              >
-                X
-              </div>
-              <TipTap
-                style={{
-                  padding: `${settings.padding}mm`,
-                }}
-                className="web-text-indigo-200 web-border-2 web-border-indigo-400 web-border-solid web-h-full"
-                content={c.description}
-              />
-            </article>
+            <CardsGeneratorEditor card={c} onRemove={removeCard} />
           </li>
         ))}
       </ul>
@@ -59,7 +44,3 @@ interface Props {
   className: string;
 }
 
-interface Card {
-  id?: number;
-  description: JSONContent | string;
-}

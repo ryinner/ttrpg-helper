@@ -20,7 +20,7 @@ import {
   FaListUl,
   FaStrikethrough,
 } from "react-icons/fa";
-import { useI18n } from '../../locales/client';
+import { useI18n } from "../../locales/client";
 
 export default function TipTap({
   className,
@@ -38,7 +38,7 @@ export default function TipTap({
       StarterKit.configure({
         document: false,
         bulletList: false,
-        orderedList: false
+        orderedList: false,
       }),
       BulletList.configure({
         HTMLAttributes: {
