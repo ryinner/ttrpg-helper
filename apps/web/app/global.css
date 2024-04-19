@@ -7,7 +7,7 @@ html, body {
   height: 100%;
 }
 
-.tiptap .is-editor-empty:first-child::before {
+.tiptap .is-empty:first-child::before {
   @apply web-text-indigo-200 web-opacity-70 web-pointer-events-none web-h-0 web-float-left;
   content: attr(data-placeholder);
 }
