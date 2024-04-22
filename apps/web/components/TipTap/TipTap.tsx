@@ -26,6 +26,8 @@ import {
 } from "react-icons/fa";
 import { useI18n } from "../../locales/client";
 import TextAlign from "@tiptap/extension-text-align";
+import Dropcursor from '@tiptap/extension-dropcursor';
+import Image from '@tiptap/extension-image';
 
 export default function TipTap({
   className,
@@ -66,6 +68,13 @@ export default function TipTap({
       TextAlign.configure({
         types: ["heading", "paragraph"],
       }),
+      Dropcursor.configure({
+        class: 'web-bg-indigo-200'
+      }),
+      Image.configure({
+        inline: true,
+        allowBase64: true,
+      })
     ],
     editorProps: {
       attributes: {
