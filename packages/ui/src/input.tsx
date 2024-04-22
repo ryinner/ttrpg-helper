@@ -9,16 +9,9 @@ export const Input = forwardRef<HTMLInputElement, Props>(function Input(
 
   return (
     <div>
-      <input
-        ref={ref}
-        id={id}
-        className={className}
-        {...props}
-      />
+      <input ref={ref} id={id} className={className} {...props} />
     </div>
   );
 });
 
-interface Props extends InputHTMLAttributes<HTMLInputElement> {
-
-}
+interface Props extends InputHTMLAttributes<HTMLInputElement> {}

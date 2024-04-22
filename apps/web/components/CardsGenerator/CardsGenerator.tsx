@@ -9,7 +9,8 @@ import CardsGeneratorEditor, {
 } from "./CardsGeneratorEditor";
 
 const testCard = {
-  description: '<h1 style="text-align: center"></h1><p style="text-align: left"></p>',
+  description:
+    '<h1 style="text-align: center"></h1><p style="text-align: left"></p>',
 };
 
 export default function CardsGenerator({ className }: Props): React.ReactNode {
@@ -21,8 +22,8 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   // }
 
   const updateCard: UpdateCardHandler = (card) => {
-    setCards(() => cards.map((c) => c !== card ? c : card));
-  } 
+    setCards(() => cards.map((c) => (c !== card ? c : card)));
+  };
 
   const removeCard: RemoveCardHandler = (card) => {
     setCards(() => cards.filter((c) => c !== card));
@@ -40,7 +41,11 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
       >
         {cards.map((c) => (
           <li key={c.id}>
-            <CardsGeneratorEditor card={c} onRemove={removeCard} onUpdate={updateCard} />
+            <CardsGeneratorEditor
+              card={c}
+              onRemove={removeCard}
+              onUpdate={updateCard}
+            />
           </li>
         ))}
       </ul>

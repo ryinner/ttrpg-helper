@@ -1,7 +1,7 @@
 export default {
   app: {
     name: "TTRPG Helper",
-    description: "The Best TTRPG Helper in the world"
+    description: "The Best TTRPG Helper in the world",
   },
   nav: {
     cardsGenerator: "Cards Generator",
@@ -11,7 +11,7 @@ export default {
       required: "Field {name} is required",
     },
     buttons: {
-      apply: "Apply"
-    }
-  }
+      apply: "Apply",
+    },
+  },
 } as const;

@@ -2,7 +2,7 @@ import { getI18n } from "../../locales/server";
 import TheContent from "./TheContent";
 import TheLogo from "./TheLogo";
 import TheNavigation from "./TheNavigation";
-import { NavigationLink } from './NavigationLink';
+import { NavigationLink } from "./NavigationLink";
 
 const navLinks = [
   {

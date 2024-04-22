@@ -11,19 +11,19 @@ export default {
       required: "Поле {name} обязательно для заполнения",
     },
     buttons: {
-      apply: "Применить"
+      apply: "Применить",
     },
     cardsGenerationSettings: {
-      width: 'Ширина мм',
-      height: 'Длина мм',
-      gap: 'Отступ мм',
-      padding: 'Внутренний отступ мм'
-    }
+      width: "Ширина мм",
+      height: "Длина мм",
+      gap: "Отступ мм",
+      padding: "Внутренний отступ мм",
+    },
   },
   tipTap: {
     placeholder: {
-      writeTitle: 'Назовите этой карты',
-      writeContent: 'Опишите карту'
-    }
-  }
+      writeTitle: "Назовите этой карты",
+      writeContent: "Опишите карту",
+    },
+  },
 } as const;

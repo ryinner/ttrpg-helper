@@ -1,11 +1,15 @@
 import type { JSONContent } from "@tiptap/core";
-import TipTap from '../TipTap/TipTap';
-import { useCardsGeneratorContext } from './CardsGeneratorProvider';
+import TipTap from "../TipTap/TipTap";
+import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
 
-export default function CardsGeneratorEditor({ card, onRemove, onUpdate }: Props) {
+export default function CardsGeneratorEditor({
+  card,
+  onRemove,
+  onUpdate,
+}: Props) {
   const { settings } = useCardsGeneratorContext();
 
-  function updateCardContent (content: JSONContent) {
+  function updateCardContent(content: JSONContent) {
     card.description = content;
     onUpdate(card);
   }
