@@ -13,7 +13,7 @@ export default function CardsGeneratorEditor({ card, onRemove, onUpdate }: Props
   return (
     <article className="web-h-full web-relative">
       <div
-        className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web--translate-y-2 web-translate-x-1 web-flex web-align-center web-justify-center web-cursor-pointer"
+        className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web--translate-y-2 web-translate-x-1 web-flex web-align-center web-justify-center web-cursor-pointer print:web-hidden"
         onClick={() => onRemove(card)}
       >
         X
