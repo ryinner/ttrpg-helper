@@ -40,7 +40,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
         }}
       >
         {cards.map((c) => (
-          <li key={c.id}>
+          <li key={c.description.toString()}>
             <CardsGeneratorEditor
               card={c}
               onRemove={removeCard}

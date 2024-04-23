@@ -12,6 +12,10 @@ export default {
     },
     buttons: {
       apply: "Применить",
+      remove: "Удалить",
+      copy: "Копировать",
+      create: "Создать",
+      add: "Добавить"
     },
     cardsGenerationSettings: {
       width: "Ширина мм",

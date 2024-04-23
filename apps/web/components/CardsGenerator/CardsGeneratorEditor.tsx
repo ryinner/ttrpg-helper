@@ -1,27 +1,47 @@
+'use client';
+
 import type { JSONContent } from "@tiptap/core";
 import TipTap from "../TipTap/TipTap";
 import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
+import { IoIosMore } from "react-icons/io";
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { useI18n } from '../../locales/client';
 
 export default function CardsGeneratorEditor({
   card,
-  onRemove,
+  onCreate,
   onUpdate,
+  onRemove,
 }: Props) {
   const { settings } = useCardsGeneratorContext();
+  const t = useI18n();
+
 
   function updateCardContent(content: JSONContent) {
     card.description = content;
     onUpdate(card);
   }
 
+  function removeCard () {
+    onRemove(card);
+  }
+
   return (
     <article className="web-h-full web-relative">
-      <div
-        className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web--translate-y-2 web-translate-x-1 web-flex web-align-center web-justify-center web-cursor-pointer print:web-hidden"
-        onClick={() => onRemove(card)}
-      >
-        X
-      </div>
+      <DropdownMenu.Root>
+        <DropdownMenu.Trigger>
+          <span className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web-translate-y-3 web-translate-x-2 web-flex web-items-center web-justify-center web-cursor-pointer print:web-hidden">
+            <IoIosMore />
+          </span>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Portal>
+          <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
+            <DropdownMenu.Item className="DropdownMenuItem" onClick={removeCard}>
+              {t('form.buttons.remove')}
+            </DropdownMenu.Item>
+          </DropdownMenu.Content>
+        </DropdownMenu.Portal>
+      </DropdownMenu.Root>
       <TipTap
         style={{
           padding: `${settings.padding}mm`,
@@ -36,12 +56,21 @@ export default function CardsGeneratorEditor({
 
 interface Props {
   card: Card;
-  onRemove: RemoveCardHandler;
+  onCreate?: CreateCardHandler;
   onUpdate: UpdateCardHandler;
+  onRemove: RemoveCardHandler;
 }
 
-export type RemoveCardHandler = (e: Card) => void;
+export enum AddCardMode {
+  addAfter,
+  addBefore,
+  copyAfter,
+  copyBefore,
+}
+
+export type CreateCardHandler = (e: { item: Card; mode: AddCardMode }) => void;
 export type UpdateCardHandler = (e: Card) => void;
+export type RemoveCardHandler = (e: Card) => void;
 
 export interface Card {
   id?: number;
