@@ -3,7 +3,9 @@
 import { useState } from "react";
 import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
 import CardsGeneratorEditor, {
+  AddCardMode,
   type Card,
+  type CreateCardHandler,
   type RemoveCardHandler,
   type UpdateCardHandler,
 } from "./CardsGeneratorEditor";
@@ -17,10 +19,6 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   const [cards, setCards] = useState<Card[]>([testCard]);
   const { settings } = useCardsGeneratorContext();
 
-  // function addCard(): void {
-  //   setCards(() => [...cards, { description: "" }]);
-  // }
-
   const updateCard: UpdateCardHandler = (card) => {
     setCards(() => cards.map((c) => (c !== card ? c : card)));
   };
@@ -28,6 +26,18 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   const removeCard: RemoveCardHandler = (card) => {
     setCards(() => cards.filter((c) => c !== card));
   };
+
+  const createCard: CreateCardHandler = ({ card, mode }) => {
+    const newCard: Card = mode === AddCardMode.copy ? JSON.parse((JSON.stringify(card))) : { description: '' };
+
+    setCards((cards) => cards.reduce<Card[]>((result, c) => {
+      result.push(c);
+      if (c === card) {
+        result.push(newCard);
+      }
+      return result;
+    }, []));
+  }
 
   return (
     <section className={className}>
@@ -45,6 +55,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
               card={c}
               onRemove={removeCard}
               onUpdate={updateCard}
+              onCreate={createCard}
             />
           </li>
         ))}

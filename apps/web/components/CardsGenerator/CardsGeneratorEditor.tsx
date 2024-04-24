@@ -26,18 +26,30 @@ export default function CardsGeneratorEditor({
     onRemove(card);
   }
 
+  function copyCard () {
+    onCreate({ card, mode: AddCardMode.copy });
+  }
+
+  function createCard () {
+    onCreate({ card, mode: AddCardMode.create });
+  }
+
   return (
     <article className="web-h-full web-relative">
       <DropdownMenu.Root>
-        <DropdownMenu.Trigger>
-          <span className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web-translate-y-3 web-translate-x-2 web-flex web-items-center web-justify-center web-cursor-pointer print:web-hidden">
-            <IoIosMore />
-          </span>
+        <DropdownMenu.Trigger className="web-rounded-full web-w-6 web-h-6 web-bg-indigo-400 web-text-indigo-100 web-absolute web-top-0 web-right-0 web--translate-y-2 web-translate-x-2 web-flex web-items-center web-justify-center web-cursor-pointer print:web-hidden">
+          <IoIosMore />
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
-          <DropdownMenu.Content className="DropdownMenuContent" sideOffset={5}>
-            <DropdownMenu.Item className="DropdownMenuItem" onClick={removeCard}>
+          <DropdownMenu.Content className="web-bg-indigo-400 web-min-w-32" sideOffset={5}>
+            <DropdownMenu.Item className="web-outline-none web-select-none" onClick={removeCard}>
               {t('form.buttons.remove')}
+            </DropdownMenu.Item>
+            <DropdownMenu.Item className="web-outline-none web-select-none" onClick={createCard}>
+              {t('form.buttons.add')}
+            </DropdownMenu.Item>
+            <DropdownMenu.Item className="web-outline-none web-select-none" onClick={copyCard}>
+              {t('form.buttons.copy')}
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
@@ -56,19 +68,17 @@ export default function CardsGeneratorEditor({
 
 interface Props {
   card: Card;
-  onCreate?: CreateCardHandler;
+  onCreate: CreateCardHandler;
   onUpdate: UpdateCardHandler;
   onRemove: RemoveCardHandler;
 }
 
 export enum AddCardMode {
-  addAfter,
-  addBefore,
-  copyAfter,
-  copyBefore,
+  create,
+  copy,
 }
 
-export type CreateCardHandler = (e: { item: Card; mode: AddCardMode }) => void;
+export type CreateCardHandler = (e: { card: Card; mode: AddCardMode }) => void;
 export type UpdateCardHandler = (e: Card) => void;
 export type RemoveCardHandler = (e: Card) => void;
 
