@@ -1,0 +1,15 @@
+{
+  "name": "@repo/helpers",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./object": "./src/object.ts"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/eslint": "^8.56.5",
+    "eslint": "^8.57.0",
+    "typescript": "^5.3.3"
+  }
+}

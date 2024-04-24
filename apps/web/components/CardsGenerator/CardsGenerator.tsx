@@ -9,14 +9,15 @@ import CardsGeneratorEditor, {
   type RemoveCardHandler,
   type UpdateCardHandler,
 } from "./CardsGeneratorEditor";
+import { jsonCopy } from "@repo/helpers/object";
 
-const testCard = {
+const defaultCardTemplate = {
   description:
     '<h1 style="text-align: center"></h1><p style="text-align: left"></p>',
-};
+} as const;
 
 export default function CardsGenerator({ className }: Props): React.ReactNode {
-  const [cards, setCards] = useState<Card[]>([testCard]);
+  const [cards, setCards] = useState<Card[]>([defaultCardTemplate]);
   const { settings } = useCardsGeneratorContext();
 
   const updateCard: UpdateCardHandler = (card) => {
@@ -28,8 +29,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   };
 
   const createCard: CreateCardHandler = ({ card, mode }) => {
-    const newCard: Card = mode === AddCardMode.copy ? JSON.parse((JSON.stringify(card))) : { description: '' };
-
+    const newCard = jsonCopy<Card>({ object: mode === AddCardMode.copy ? card : defaultCardTemplate });
     setCards((cards) => cards.reduce<Card[]>((result, c) => {
       result.push(c);
       if (c === card) {
