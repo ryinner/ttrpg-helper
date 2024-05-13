@@ -12,6 +12,7 @@ import CardsGeneratorEditor, {
 import { jsonCopy } from "@repo/helpers/object";
 
 const defaultCardTemplate = {
+  id: 0,
   description:
     '<h1 style="text-align: center"></h1><p style="text-align: left"></p>',
 } as const;
@@ -29,15 +30,20 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
   };
 
   const createCard: CreateCardHandler = ({ card, mode }) => {
-    const newCard = jsonCopy<Card>({ object: mode === AddCardMode.copy ? card : defaultCardTemplate });
-    setCards((cards) => cards.reduce<Card[]>((result, c) => {
-      result.push(c);
-      if (c === card) {
-        result.push(newCard);
-      }
-      return result;
-    }, []));
-  }
+    const newCard = jsonCopy<Card>({
+      object: mode === AddCardMode.copy ? card : defaultCardTemplate,
+    });
+    newCard.id = Math.random();
+    setCards((cards) =>
+      cards.reduce<Card[]>((result, c) => {
+        result.push(c);
+        if (c === card) {
+          result.push(newCard);
+        }
+        return result;
+      }, []),
+    );
+  };
 
   return (
     <section className={className}>
@@ -50,7 +56,7 @@ export default function CardsGenerator({ className }: Props): React.ReactNode {
         }}
       >
         {cards.map((c) => (
-          <li key={c.description.toString()}>
+          <li key={c.id}>
             <CardsGeneratorEditor
               card={c}
               onRemove={removeCard}
