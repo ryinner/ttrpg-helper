@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
 import type { JSONContent } from "@tiptap/core";
 import TipTap from "../TipTap/TipTap";
 import { useCardsGeneratorContext } from "./CardsGeneratorProvider";
 import { IoIosMore } from "react-icons/io";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { useI18n } from '../../locales/client';
+import { useI18n } from "../../locales/client";
 
 export default function CardsGeneratorEditor({
   card,
@@ -16,21 +16,20 @@ export default function CardsGeneratorEditor({
   const { settings } = useCardsGeneratorContext();
   const t = useI18n();
 
-
   function updateCardContent(content: JSONContent) {
     card.description = content;
     onUpdate(card);
   }
 
-  function removeCard () {
+  function removeCard() {
     onRemove(card);
   }
 
-  function copyCard () {
+  function copyCard() {
     onCreate({ card, mode: AddCardMode.copy });
   }
 
-  function createCard () {
+  function createCard() {
     onCreate({ card, mode: AddCardMode.create });
   }
 
@@ -41,15 +40,27 @@ export default function CardsGeneratorEditor({
           <IoIosMore />
         </DropdownMenu.Trigger>
         <DropdownMenu.Portal>
-          <DropdownMenu.Content className="web-bg-indigo-400 web-min-w-32" sideOffset={5}>
-            <DropdownMenu.Item className="web-outline-none web-select-none" onClick={removeCard}>
-              {t('form.buttons.remove')}
+          <DropdownMenu.Content
+            className="web-bg-indigo-400 web-min-w-32 web-rounded-sm"
+            sideOffset={5}
+          >
+            <DropdownMenu.Item
+              className="web-outline-none web-select-none web-cursor-pointer web-px-2 web-py-1 web-border-b-2 web-border-solid web-border-indigo-200"
+              onClick={removeCard}
+            >
+              {t("form.buttons.remove")}
             </DropdownMenu.Item>
-            <DropdownMenu.Item className="web-outline-none web-select-none" onClick={createCard}>
-              {t('form.buttons.add')}
+            <DropdownMenu.Item
+              className="web-outline-none web-select-none web-cursor-pointer web-px-2 web-py-1 web-border-b-2 web-border-solid web-border-indigo-200"
+              onClick={createCard}
+            >
+              {t("form.buttons.add")}
             </DropdownMenu.Item>
-            <DropdownMenu.Item className="web-outline-none web-select-none" onClick={copyCard}>
-              {t('form.buttons.copy')}
+            <DropdownMenu.Item
+              className="web-outline-none web-select-none web-cursor-pointer web-px-2 web-py-1"
+              onClick={copyCard}
+            >
+              {t("form.buttons.copy")}
             </DropdownMenu.Item>
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
