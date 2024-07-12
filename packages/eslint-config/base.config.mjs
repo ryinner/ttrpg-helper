@@ -43,7 +43,8 @@ export default [
       '@stylistic/ts/quotes': ['warn', 'single', {
         avoidEscape: true
       }],
-      '@stylistic/ts/object-property-newline': 'off'
+      '@stylistic/ts/object-property-newline': 'off',
+      '@stylistic/ts/brace-style': 'off',
     }
   }
 ];
