@@ -28,11 +28,10 @@ model Language {
 // App tables
 
 model TTRPG {
-  id          Int     @id @default(autoincrement())
-  isPublished Boolean @default(true)
-
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  id          Int       @id @default(autoincrement())
+  isPublished Boolean   @default(true)
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
   TTRPGTranslates TTRPGTranslate[]
 
@@ -40,16 +39,40 @@ model TTRPG {
 }
 
 model TTRPGTranslate {
-  id         Int    @id @default(autoincrement())
-  languageId Int    @map("language_id")
-  ttrpgId    Int    @map("table_top_role_playing_game_id")
+  id         Int       @id @default(autoincrement())
+  languageId Int       @map("language_id")
+  ttrpgId    Int       @map("table_top_role_playing_game_id")
   name       String
-
-  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
   ttrpg TTRPG @relation(fields: [ttrpgId], references: [id], onDelete: Restrict)
 
   @@unique([languageId, ttrpgId])
   @@map("table_top_role_playing_games_translates")
+}
+
+model CardCollection {
+  id          Int       @id @default(autoincrement())
+  isPublished Boolean   @default(true)
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  CardsCollectionsTrasnlate CardsCollectionsTrasnlate[]
+
+  @@map("cards_collections")
+}
+
+model CardsCollectionsTrasnlate {
+  id               Int       @id @default(autoincrement())
+  languageId       Int       @map("language_id")
+  cardCollectionId Int       @map("card_collection_id")
+  name             String
+  createdAt        DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  cardCollections CardCollection @relation(fields: [cardCollectionId], references: [id], onDelete: Cascade)
+
+  @@unique([languageId, cardCollectionId])
+  @@map("cards_collections_translates")
 }
