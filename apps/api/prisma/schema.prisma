@@ -43,6 +43,7 @@ model TTRPGTranslate {
   languageId Int       @map("language_id")
   ttrpgId    Int       @map("table_top_role_playing_game_id")
   name       String
+  nameShort  String    @map("name_short")
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 

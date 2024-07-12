@@ -42,10 +42,12 @@ async function ttrpgs(): Promise<void> {
               {
                 languageId: Languages.Russian,
                 name: 'Вампиры Маскарад',
+                nameShort: 'ВтМ',
               },
               {
                 languageId: Languages.English,
                 name: 'Vampire The Masquerade',
+                nameShort: 'VtM',
               },
             ],
           },
@@ -61,10 +63,12 @@ async function ttrpgs(): Promise<void> {
               {
                 languageId: Languages.Russian,
                 name: 'Подземелья и Драконы',
+                nameShort: 'ДнД',
               },
               {
                 languageId: Languages.English,
                 name: 'Dungeons and Dragons',
+                nameShort: 'DnD',
               },
             ],
           },
