@@ -33,7 +33,7 @@ model TTRPG {
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  trasnlates TTRPGTranslate[]
+  translates TTRPGTranslate[]
 
   @@map("table_top_role_playing_games")
 }
@@ -57,7 +57,7 @@ model Tag {
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  trasnlates TagTrasnlate[]
+  translates TagTrasnlate[]
 
   @@map("tags")
 }
@@ -82,7 +82,7 @@ model CardCollection {
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  trasnlates CardCollectionTrasnlate[]
+  translates CardCollectionTrasnlate[]
 
   @@map("cards_collections")
 }
