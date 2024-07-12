@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -33,7 +33,7 @@ model TTRPG {
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  TTRPGTranslates TTRPGTranslate[]
+  trasnlates TTRPGTranslate[]
 
   @@map("table_top_role_playing_games")
 }
@@ -52,18 +52,42 @@ model TTRPGTranslate {
   @@map("table_top_role_playing_games_translates")
 }
 
+model Tag {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  trasnlates TagTrasnlate[]
+
+  @@map("tags")
+}
+
+model TagTrasnlate {
+  id         Int       @id @default(autoincrement())
+  languageId Int       @map("language_id")
+  tagId      Int       @map("tag_id")
+  name       String
+  createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@unique([languageId, tagId])
+  @@map("tag_translate")
+}
+
 model CardCollection {
   id          Int       @id @default(autoincrement())
   isPublished Boolean   @default(true)
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  CardsCollectionsTrasnlate CardsCollectionsTrasnlate[]
+  trasnlates CardCollectionTrasnlate[]
 
   @@map("cards_collections")
 }
 
-model CardsCollectionsTrasnlate {
+model CardCollectionTrasnlate {
   id               Int       @id @default(autoincrement())
   languageId       Int       @map("language_id")
   cardCollectionId Int       @map("card_collection_id")
