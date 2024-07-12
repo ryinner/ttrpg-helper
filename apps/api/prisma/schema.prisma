@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Systems Tables
+
+model Language {
+  id   Int    @id @default(autoincrement())
+  code String @db.VarChar(2)
+
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  @@map("languages")
+}
+
+// App tables
+
+model TTRPG {
+  id          Int     @id @default(autoincrement())
+  isPublished Boolean @default(true)
+
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  TTRPGTranslates TTRPGTranslate[]
+
+  @@map("table_top_role_playing_games")
+}
+
+model TTRPGTranslate {
+  id         Int    @id @default(autoincrement())
+  languageId Int    @map("language_id")
+  ttrpgId    Int    @map("table_top_role_playing_game_id")
+  name       String
+
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  ttrpg TTRPG @relation(fields: [ttrpgId], references: [id], onDelete: Restrict)
+
+  @@unique([languageId, ttrpgId])
+  @@map("table_top_role_playing_games_translates")
+}
