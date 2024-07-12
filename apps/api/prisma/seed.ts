@@ -12,6 +12,11 @@ enum TTRPGS {
   DungeonsAndDragons = 2,
 }
 
+enum Tags {
+  Disciplines = 1,
+  Bane = 2,
+}
+
 async function languages(): Promise<void> {
   const languagesCount = await prisma.language.count();
   if (languagesCount === 0) {
@@ -78,10 +83,37 @@ async function ttrpgs(): Promise<void> {
   }
 }
 
+async function tags(): Promise<void> {
+  const tagsCount = await prisma.tag.count();
+  if (tagsCount === 0) {
+    await prisma.tag.create({
+      data: {
+        id: Tags.Disciplines,
+        translates: {
+          create: {
+            languageId: Languages.Russian,
+            name: 'Дисциплины',
+          },
+        },
+      },
+    });
+    await prisma.tag.create({
+      data: {
+        id: Tags.Bane,
+        translates: {
+          create: {
+            languageId: Languages.Russian,
+            name: 'Клановый изъян',
+          },
+        },
+      },
+    });
+  }
+}
+
 async function main(): Promise<void> {
   await languages();
-  await ttrpgs();
-  await Promise.all([]);
+  await Promise.all([ttrpgs(), tags()]);
 }
 
 main()
