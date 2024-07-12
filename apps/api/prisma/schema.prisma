@@ -73,7 +73,7 @@ model TagTrasnlate {
   tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
 
   @@unique([languageId, tagId])
-  @@map("tag_translate")
+  @@map("tags_translates")
 }
 
 model CardCollection {
