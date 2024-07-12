@@ -15,6 +15,7 @@ enum TTRPGS {
 enum Tags {
   Disciplines = 1,
   Bane = 2,
+  Clan = 3,
 }
 
 async function languages(): Promise<void> {
@@ -104,6 +105,17 @@ async function tags(): Promise<void> {
           create: {
             languageId: Languages.Russian,
             name: 'Клановый изъян',
+          },
+        },
+      },
+    });
+    await prisma.tag.create({
+      data: {
+        id: Tags.Clan,
+        translates: {
+          create: {
+            languageId: Languages.Russian,
+            name: 'Клан',
           },
         },
       },
