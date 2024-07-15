@@ -16,6 +16,7 @@ enum Tags {
   Disciplines = 1,
   Bane = 2,
   Clan = 3,
+  Spell = 4,
 }
 
 async function languages(): Promise<void> {
@@ -116,6 +117,17 @@ async function tags(): Promise<void> {
           create: {
             languageId: Languages.Russian,
             name: 'Клан',
+          },
+        },
+      },
+    });
+    await prisma.tag.create({
+      data: {
+        id: Tags.Spell,
+        translates: {
+          create: {
+            languageId: Languages.Russian,
+            name: 'Заклинание',
           },
         },
       },
