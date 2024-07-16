@@ -1,7 +1,6 @@
 import { Controller, Get, Res } from '@nestjs/common';
-// eslint-disable-next-line @typescript-eslint/consistent-type-imports
 import { AppService } from './app.service';
-import { type Response } from 'express';
+import { Response } from 'express';
 import { ApiResponse } from '@nestjs/swagger';
 
 @Controller()

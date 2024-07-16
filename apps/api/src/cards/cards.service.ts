@@ -9,7 +9,7 @@ export class CardsService {
   }
 
   findAll() {
-    return `This action returns all cards`;
+    return 'This action returns all cards';
   }
 
   findOne(id: number) {
