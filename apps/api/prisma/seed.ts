@@ -135,9 +135,57 @@ async function tags(): Promise<void> {
   }
 }
 
+async function collections(): Promise<void> {
+  const cardsCollectionCount = await prisma.cardsCollection.count();
+  if (cardsCollectionCount === 0) {
+    await prisma.cardsCollection.create({
+      data: {
+        isPublished: true,
+        translates: {
+          create: {
+            name: 'Жрец',
+            languageId: Languages.Russian,
+          },
+        },
+      },
+    });
+  }
+}
+
+async function cards(): Promise<void> {
+  const cardCount = await prisma.card.count();
+  if (cardCount === 0) {
+    await prisma.card.create({
+      data: {
+        translates: {
+          create: {
+            name: 'Благословение',
+            description:
+              'Вы благословляете до трёх существ на свой выбор в пределах дистанции. Каждый раз, когда до окончания заклинания цель совершает бросок атаки или спасбросок, она может бросить к4 и добавить выпавшее число к результату.',
+            languageId: Languages.Russian,
+          },
+        },
+      },
+    });
+  }
+}
+
+async function cardsCollections(): Promise<void> {
+  const cardCardsCollectionCount = await prisma.cardCardsCollection.count();
+  if (cardCardsCollectionCount === 0) {
+    await prisma.cardCardsCollection.create({
+      data: {
+        cardId: 1,
+        cardCollectionId: 1,
+      },
+    });
+  }
+}
+
 async function main(): Promise<void> {
   await languages();
-  await Promise.all([ttrpgs(), tags()]);
+  await Promise.all([ttrpgs(), tags(), collections(), cards()]);
+  await cardsCollections();
 }
 
 main()
