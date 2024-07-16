@@ -119,12 +119,12 @@ model CardTranslate {
   languageId  Int       @map("language_id")
   cardId      Int       @map("card_id")
   name        String
-  description String
+  description String    @db.Text
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
   Card        Card      @relation(fields: [cardId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
-  @@map("card_translate")
+  @@map("cards_translates")
 }
 
 model CardCardsCollection {
