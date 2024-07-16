@@ -7,6 +7,6 @@ export class CreateCardDto {
   @ApiProperty({ required: true })
   description: string;
 
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: false })
   languageId: number;
 }
