@@ -47,7 +47,7 @@ model TTRPGTranslate {
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  ttrpg TTRPG @relation(fields: [ttrpgId], references: [id], onDelete: Restrict)
+  ttrpg TTRPG @relation(fields: [ttrpgId], references: [id], onUpdate: Cascade, onDelete: Restrict)
 
   @@unique([languageId, ttrpgId])
   @@map("table_top_role_playing_games_translates")
@@ -71,24 +71,25 @@ model TagTrasnlate {
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt  DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  tag Tag @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tag Tag @relation(fields: [tagId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   @@unique([languageId, tagId])
   @@map("tags_translates")
 }
 
-model CardCollection {
+model CardsCollection {
   id          Int       @id @default(autoincrement())
   isPublished Boolean   @default(true)
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  translates CardCollectionTrasnlate[]
+  translates          CardsCollectionTrasnlate[]
+  CardCardsCollection CardCardsCollection[]
 
   @@map("cards_collections")
 }
 
-model CardCollectionTrasnlate {
+model CardsCollectionTrasnlate {
   id               Int       @id @default(autoincrement())
   languageId       Int       @map("language_id")
   cardCollectionId Int       @map("card_collection_id")
@@ -96,8 +97,45 @@ model CardCollectionTrasnlate {
   createdAt        DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  cardCollections CardCollection @relation(fields: [cardCollectionId], references: [id], onDelete: Cascade)
+  cardCollections CardsCollection @relation(fields: [cardCollectionId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
   @@unique([languageId, cardCollectionId])
   @@map("cards_collections_translates")
+}
+
+model Card {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  translates          CardTranslate[]
+  CardCardsCollection CardCardsCollection[]
+
+  @@map("cards")
+}
+
+model CardTranslate {
+  id          Int       @id @default(autoincrement())
+  languageId  Int       @map("language_id")
+  cardId      Int       @map("card_id")
+  name        String
+  description String
+  createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+  Card        Card      @relation(fields: [cardId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  @@map("card_translate")
+}
+
+model CardCardsCollection {
+  id               Int       @id @default(autoincrement())
+  cardId           Int
+  cardCollectionId Int
+  createdAt        DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  card       Card            @relation(fields: [cardId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  collection CardsCollection @relation(fields: [cardCollectionId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+
+  @@map("cards_cards_collections")
 }
