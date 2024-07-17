@@ -1,23 +1,7 @@
 import { PrismaClient } from '@prisma/client';
+import { Languages, TTRPGS, Tags } from '@repo/api-sdk';
 
 const prisma = new PrismaClient();
-
-enum Languages {
-  Russian = 1,
-  English = 2,
-}
-
-enum TTRPGS {
-  VampireTheMasquerade = 1,
-  DungeonsAndDragons = 2,
-}
-
-enum Tags {
-  Disciplines = 1,
-  Bane = 2,
-  Clan = 3,
-  Spell = 4,
-}
 
 async function languages(): Promise<void> {
   const languagesCount = await prisma.language.count();

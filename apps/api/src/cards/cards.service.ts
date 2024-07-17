@@ -25,7 +25,14 @@ export class CardsService extends PrismaService {
     return 'This action returns all cards';
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
+    const card = await this.card.findFirst({
+      include: {},
+      where: {
+        id,
+      },
+    });
+
     return `This action returns a #${id} card`;
   }
 
