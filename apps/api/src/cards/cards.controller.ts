@@ -11,7 +11,7 @@ import {
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CardEntity } from './entities/card.entity';
 
 @ApiTags('cards')
@@ -28,12 +28,11 @@ export class CardsController {
     return this.cardsService.create(createCardDto);
   }
 
-  @Get()
-  findAll() {
-    return this.cardsService.findAll();
-  }
-
   @Get(':id')
+  @ApiOkResponse({
+    type: CardEntity,
+    description: 'Get card by id',
+  })
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.cardsService.findOne(id);
   }
