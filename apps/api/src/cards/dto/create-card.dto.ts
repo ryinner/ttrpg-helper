@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ICreateCardDto } from '@repo/api-sdk';
+import { ICreateCardDto, Languages } from '@repo/api-sdk';
 
 export class CreateCardDto implements ICreateCardDto {
   @ApiProperty({ required: true })
@@ -9,5 +9,5 @@ export class CreateCardDto implements ICreateCardDto {
   description: string;
 
   @ApiProperty({ required: false })
-  languageId: number;
+  languageId: number = Languages.Russian;
 }

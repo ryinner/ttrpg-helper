@@ -5,6 +5,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCardMapper } from './mappers/create-card.mapper';
 import { CardEntity } from './entities/card.entity';
 import { Languages } from '@repo/api-sdk';
+import { UpdateCardMapper } from './mappers/update-card.mapper';
 
 @Injectable()
 export class CardsService extends PrismaService {
@@ -39,11 +40,43 @@ export class CardsService extends PrismaService {
     return new CardEntity(card);
   }
 
-  update(id: number, updateCardDto: UpdateCardDto) {
-    return `This action updates a #${id} card`;
+  async update(id: number, updateCardDto: UpdateCardDto) {
+    const { translate } = new UpdateCardMapper().toPrisma(updateCardDto);
+
+    const card = await this.card.update({
+      data: {
+        translates: {
+          update: {
+            data: translate,
+            where: {
+              cardId_languageId: {
+                cardId: id,
+                languageId: updateCardDto.languageId,
+              },
+            },
+          },
+        },
+      },
+      where: {
+        id,
+      },
+      include: {
+        translates: {
+          where: {
+            languageId: Languages.Russian,
+          },
+        },
+      },
+    });
+
+    return new CardEntity(card);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} card`;
+  async remove(id: number) {
+    return await this.card.delete({
+      where: {
+        id,
+      },
+    });
   }
 }

@@ -38,6 +38,9 @@ export class CardsController {
   }
 
   @Patch(':id')
+  @ApiOkResponse({
+    type: CardEntity,
+  })
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCardDto: UpdateCardDto,
@@ -46,6 +49,7 @@ export class CardsController {
   }
 
   @Delete(':id')
+  @ApiOkResponse()
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.cardsService.remove(id);
   }

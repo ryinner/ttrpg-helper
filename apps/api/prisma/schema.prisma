@@ -124,6 +124,7 @@ model CardTranslate {
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
   Card        Card      @relation(fields: [cardId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
+  @@unique([cardId, languageId])
   @@map("cards_translates")
 }
 
