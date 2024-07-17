@@ -1,0 +1,14 @@
+{
+  "name": "@repo/api-sdk",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "eslint": "^9.7.0",
+    "typescript": "^5.5.3"
+  }
+}

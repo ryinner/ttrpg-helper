@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ICreateCardDto } from '@repo/api-sdk';
 
-export class CreateCardDto {
+export class CreateCardDto implements ICreateCardDto {
   @ApiProperty({ required: true })
   name: string;
 
