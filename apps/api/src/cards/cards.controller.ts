@@ -10,12 +10,19 @@ import {
 import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { CardEntity } from './entities/card.entity';
 
+@ApiTags('cards')
 @Controller('cards')
 export class CardsController {
   constructor(private readonly cardsService: CardsService) {}
 
   @Post()
+  @ApiCreatedResponse({
+    type: CardEntity,
+    description: 'Create a new card in db',
+  })
   create(@Body() createCardDto: CreateCardDto) {
     return this.cardsService.create(createCardDto);
   }

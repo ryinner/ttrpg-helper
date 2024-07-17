@@ -1,11 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
+import { PrismaService } from 'src/prisma/prisma.service';
+import { CreateCardMapper } from './mappers/create-card.mapper';
+import { CardEntity } from './entities/card.entity';
 
 @Injectable()
-export class CardsService {
-  create(createCardDto: CreateCardDto) {
-    return 'This action adds a new card';
+export class CardsService extends PrismaService {
+  async create(createCardDto: CreateCardDto) {
+    const card = await this.card.create({
+      data: new CreateCardMapper().toPrisma(createCardDto),
+      include: {
+        translates: {
+          where: {
+            languageId: createCardDto.languageId,
+          },
+        },
+      },
+    });
+    return new CardEntity(card);
   }
 
   findAll() {
