@@ -138,5 +138,6 @@ model CardCardsCollection {
   card       Card            @relation(fields: [cardId], references: [id], onUpdate: Cascade, onDelete: Cascade)
   collection CardsCollection @relation(fields: [cardCollectionId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
+  @@unique([cardId, cardCollectionId])
   @@map("cards_cards_collections")
 }
