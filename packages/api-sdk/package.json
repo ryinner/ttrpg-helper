@@ -2,11 +2,11 @@
   "name": "@repo/api-sdk",
   "version": "0.0.0",
   "private": true,
-  "exports": {
-    ".": "./src/index.ts"
-  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "bun test"
+    "test": "bun test",
+    "dev": "tsc"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
