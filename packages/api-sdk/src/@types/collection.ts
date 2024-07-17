@@ -1,8 +1,8 @@
-interface ICollectionCreateDto {
+interface ICreateCollectionDto {
   name: string;
 }
 
-interface ICollectionUpdateDto extends Partial<ICollectionCreateDto> {
+interface IUpdateCollectionDto extends Partial<ICreateCollectionDto> {
   id: number;
 }
 
@@ -11,4 +11,4 @@ interface ICollectionEntity {
   name: string;
 }
 
-export type { ICollectionCreateDto, ICollectionUpdateDto, ICollectionEntity };
+export type { ICreateCollectionDto, IUpdateCollectionDto, ICollectionEntity };
