@@ -30,9 +30,9 @@ export default [
         'imports': 'always-multiline',
         'exports': 'always-multiline',
         'enums': 'always',
-        'functions': 'never',
-        'generics': 'never',
-        'tuples': 'never',
+        'functions': 'always-multiline',
+        'generics': 'always-multiline',
+        'tuples': 'always-multiline',
       }],
       '@stylistic/ts/object-curly-spacing': ['warn', 'always'],
       '@stylistic/ts/space-before-function-paren': ['warn', {

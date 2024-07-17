@@ -5,6 +5,7 @@ export default [
   {
     rules: {
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'no-type-imports' }],
+      '@stylistic/ts/indent': 'off'
     }
   }
 ];

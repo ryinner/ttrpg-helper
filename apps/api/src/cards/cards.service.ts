@@ -4,6 +4,7 @@ import { UpdateCardDto } from './dto/update-card.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateCardMapper } from './mappers/create-card.mapper';
 import { CardEntity } from './entities/card.entity';
+import { Languages } from '@repo/api-sdk';
 
 @Injectable()
 export class CardsService extends PrismaService {
@@ -27,13 +28,19 @@ export class CardsService extends PrismaService {
 
   async findOne(id: number) {
     const card = await this.card.findFirst({
-      include: {},
+      include: {
+        translates: {
+          where: {
+            languageId: Languages.Russian,
+          },
+        },
+      },
       where: {
         id,
       },
     });
 
-    return `This action returns a #${id} card`;
+    return new CardEntity(card);
   }
 
   update(id: number, updateCardDto: UpdateCardDto) {
