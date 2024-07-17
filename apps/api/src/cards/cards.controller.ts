@@ -34,16 +34,16 @@ export class CardsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.cardsService.findOne(+id);
+    return this.cardsService.findOne(Number(id));
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCardDto: UpdateCardDto) {
-    return this.cardsService.update(+id, updateCardDto);
+    return this.cardsService.update(Number(id), updateCardDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.cardsService.remove(+id);
+    return this.cardsService.remove(Number(id));
   }
 }
