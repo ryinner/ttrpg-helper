@@ -9,7 +9,7 @@ import { UpdateCardMapper } from './mappers/update-card.mapper';
 
 @Injectable()
 export class CardsService extends PrismaService {
-  async create(createCardDto: CreateCardDto) {
+  public async create(createCardDto: CreateCardDto) {
     const card = await this.card.create({
       data: new CreateCardMapper().toPrisma(createCardDto),
       include: {
@@ -23,7 +23,7 @@ export class CardsService extends PrismaService {
     return new CardEntity(card);
   }
 
-  async findOne(id: number) {
+  public async findOne(id: number) {
     const card = await this.card.findFirstOrThrow({
       include: {
         translates: {
@@ -40,7 +40,7 @@ export class CardsService extends PrismaService {
     return new CardEntity(card);
   }
 
-  async update(id: number, updateCardDto: UpdateCardDto) {
+  public async update(id: number, updateCardDto: UpdateCardDto) {
     const { translate } = new UpdateCardMapper().toPrisma(updateCardDto);
 
     const card = await this.card.update({
@@ -72,7 +72,7 @@ export class CardsService extends PrismaService {
     return new CardEntity(card);
   }
 
-  async remove(id: number) {
+  public async remove(id: number) {
     return await this.card.delete({
       where: {
         id,

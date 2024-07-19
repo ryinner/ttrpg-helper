@@ -9,7 +9,7 @@ import { UpdateCollectionMapper } from './mappers/update-collection.mapper';
 
 @Injectable()
 export class CollectionsService extends PrismaService {
-  async create(createCollectionDto: CreateCollectionDto) {
+  public async create(createCollectionDto: CreateCollectionDto) {
     const collection = await this.collection.create({
       data: new CreateCollectionMapper().toPrisma(createCollectionDto),
       include: {
@@ -27,7 +27,7 @@ export class CollectionsService extends PrismaService {
   //   return `This action returns all collections`;
   // }
 
-  async findOne(id: number): Promise<CollectionEntity> {
+  public async findOne(id: number): Promise<CollectionEntity> {
     const collection = await this.collection.findFirstOrThrow({
       where: {
         id,
@@ -36,7 +36,7 @@ export class CollectionsService extends PrismaService {
     return new CollectionEntity(collection);
   }
 
-  async update(id: number, updateCollectionDto: UpdateCollectionDto) {
+  public async update(id: number, updateCollectionDto: UpdateCollectionDto) {
     const { translate } = new UpdateCollectionMapper().toPrisma(
       updateCollectionDto,
     );
@@ -69,7 +69,7 @@ export class CollectionsService extends PrismaService {
     return new CollectionEntity(collection);
   }
 
-  async remove(id: number) {
+  public async remove(id: number) {
     return await this.collection.delete({
       where: {
         id,
