@@ -11,7 +11,12 @@ import {
 import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
-import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { CollectionEntity } from './entities/collection.entity';
 
 @ApiTags('collections')
@@ -39,6 +44,7 @@ export class CollectionsController {
   @ApiOkResponse({
     type: CollectionEntity,
   })
+  @ApiNotFoundResponse()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.collectionsService.findOne(id);
