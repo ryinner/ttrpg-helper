@@ -1,0 +1,21 @@
+{
+  "name": "telegram-bot",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo 'Add dev script here'",
+    "build": "echo 'Add build script here'",
+    "test": "echo 'Add test script here'",
+    "lint": "echo 'Add lint script here'"
+  },
+  "dependencies": {
+    "@repo/api-sdk": "*",
+    "telegraf": "^4.16.3"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "eslint": "^9.7.0",
+    "typescript": "^5.5.3"
+  }
+}
