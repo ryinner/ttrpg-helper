@@ -77,30 +77,30 @@ model TagTrasnlate {
   @@map("tags_translates")
 }
 
-model CardsCollection {
+model Collection {
   id          Int       @id @default(autoincrement())
   isPublished Boolean   @default(true)
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  translates          CardsCollectionTrasnlate[]
-  CardCardsCollection CardCardsCollection[]
+  translates          CollectionTrasnlate[]
+  CardCardsCollection CardCollection[]
 
-  @@map("cards_collections")
+  @@map("collections")
 }
 
-model CardsCollectionTrasnlate {
-  id               Int       @id @default(autoincrement())
-  languageId       Int       @map("language_id")
-  cardCollectionId Int       @map("card_collection_id")
-  name             String
-  createdAt        DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+model CollectionTrasnlate {
+  id           Int       @id @default(autoincrement())
+  languageId   Int       @map("language_id")
+  collectionId Int       @map("card_collection_id")
+  name         String
+  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  cardCollections CardsCollection @relation(fields: [cardCollectionId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  collection Collection @relation(fields: [collectionId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
-  @@unique([languageId, cardCollectionId])
-  @@map("cards_collections_translates")
+  @@unique([languageId, collectionId])
+  @@map("collections_translates")
 }
 
 model Card {
@@ -109,7 +109,7 @@ model Card {
   updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
   translates          CardTranslate[]
-  CardCardsCollection CardCardsCollection[]
+  CardCardsCollection CardCollection[]
 
   @@map("cards")
 }
@@ -128,16 +128,16 @@ model CardTranslate {
   @@map("cards_translates")
 }
 
-model CardCardsCollection {
-  id               Int       @id @default(autoincrement())
-  cardId           Int
-  cardCollectionId Int
-  createdAt        DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
-  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+model CardCollection {
+  id           Int       @id @default(autoincrement())
+  cardId       Int
+  collectionId Int
+  createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt    DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  card       Card            @relation(fields: [cardId], references: [id], onUpdate: Cascade, onDelete: Cascade)
-  collection CardsCollection @relation(fields: [cardCollectionId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  card       Card       @relation(fields: [cardId], references: [id], onUpdate: Cascade, onDelete: Cascade)
+  collection Collection @relation(fields: [collectionId], references: [id], onUpdate: Cascade, onDelete: Cascade)
 
-  @@unique([cardId, cardCollectionId])
-  @@map("cards_cards_collections")
+  @@unique([cardId, collectionId])
+  @@map("cards_collections")
 }

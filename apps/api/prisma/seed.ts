@@ -120,9 +120,9 @@ async function tags(): Promise<void> {
 }
 
 async function collections(): Promise<void> {
-  const cardsCollectionCount = await prisma.cardsCollection.count();
+  const cardsCollectionCount = await prisma.collection.count();
   if (cardsCollectionCount === 0) {
-    await prisma.cardsCollection.create({
+    await prisma.collection.create({
       data: {
         isPublished: true,
         translates: {
@@ -155,12 +155,12 @@ async function cards(): Promise<void> {
 }
 
 async function cardsCollections(): Promise<void> {
-  const cardCardsCollectionCount = await prisma.cardCardsCollection.count();
+  const cardCardsCollectionCount = await prisma.cardCollection.count();
   if (cardCardsCollectionCount === 0) {
-    await prisma.cardCardsCollection.create({
+    await prisma.cardCollection.create({
       data: {
         cardId: 1,
-        cardCollectionId: 1,
+        collectionId: 1,
       },
     });
   }
