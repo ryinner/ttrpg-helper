@@ -6,6 +6,7 @@ import { CollectionEntity } from './entities/collection.entity';
 import { CreateCollectionMapper } from './mappers/create-collection.mapper';
 import { Languages } from '@repo/api-sdk';
 import { UpdateCollectionMapper } from './mappers/update-collection.mapper';
+import { CardEntity } from 'src/cards/entities/card.entity';
 
 @Injectable()
 export class CollectionsService extends PrismaService {
@@ -41,6 +42,31 @@ export class CollectionsService extends PrismaService {
       },
     });
     return new CollectionEntity(collection);
+  }
+
+  public async findCards(id: number): Promise<CardEntity[]> {
+    const cards = await this.collection.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        cardsCollection: {
+          include: {
+            card: {
+              include: {
+                translates: {
+                  where: {
+                    languageId: Languages.Russian,
+                  },
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return cards.cardsCollection.map((cc) => new CardEntity(cc.card));
   }
 
   public async update(id: number, updateCollectionDto: UpdateCollectionDto) {

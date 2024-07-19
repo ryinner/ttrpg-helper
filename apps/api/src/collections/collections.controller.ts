@@ -18,6 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CollectionEntity } from './entities/collection.entity';
+import { CardEntity } from 'src/cards/entities/card.entity';
 
 @ApiTags('collections')
 @Controller('collections')
@@ -48,6 +49,15 @@ export class CollectionsController {
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.collectionsService.findOne(id);
+  }
+
+  @ApiOkResponse({
+    type: CardEntity,
+    isArray: true,
+  })
+  @Get(':id/cards')
+  findCards(@Param('id', ParseIntPipe) id: number) {
+    return this.collectionsService.findCards(id);
   }
 
   @ApiOkResponse({

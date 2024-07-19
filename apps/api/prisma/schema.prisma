@@ -83,8 +83,8 @@ model Collection {
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  translates          CollectionTranslate[]
-  CardCardsCollection CardCollection[]
+  translates      CollectionTranslate[]
+  cardsCollection CardCollection[]
 
   @@map("collections")
 }
@@ -108,8 +108,8 @@ model Card {
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  translates          CardTranslate[]
-  CardCardsCollection CardCollection[]
+  translates      CardTranslate[]
+  cardsCollection CardCollection[]
 
   @@map("cards")
 }
