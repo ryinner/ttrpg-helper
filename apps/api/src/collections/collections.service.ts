@@ -32,6 +32,13 @@ export class CollectionsService extends PrismaService {
       where: {
         id,
       },
+      include: {
+        translates: {
+          where: {
+            languageId: Languages.Russian,
+          },
+        },
+      },
     });
     return new CollectionEntity(collection);
   }
