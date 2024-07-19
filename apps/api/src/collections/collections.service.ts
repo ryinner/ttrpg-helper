@@ -24,14 +24,27 @@ export class CollectionsService extends PrismaService {
     return new CollectionEntity(collection);
   }
 
-  // findAll() {
-  //   return `This action returns all collections`;
-  // }
+  public async findAll(): Promise<CollectionEntity[]> {
+    const collections = await this.collection.findMany({
+      where: {
+        isPublished: true,
+      },
+      include: {
+        translates: {
+          where: {
+            languageId: Languages.Russian,
+          },
+        },
+      },
+    });
+    return collections.map((c) => new CollectionEntity(c));
+  }
 
   public async findOne(id: number): Promise<CollectionEntity> {
     const collection = await this.collection.findFirstOrThrow({
       where: {
         id,
+        isPublished: true,
       },
       include: {
         translates: {
@@ -45,9 +58,10 @@ export class CollectionsService extends PrismaService {
   }
 
   public async findCards(id: number): Promise<CardEntity[]> {
-    const cards = await this.collection.findFirst({
+    const collection = await this.collection.findFirst({
       where: {
         id,
+        isPublished: true,
       },
       include: {
         cardsCollection: {
@@ -66,7 +80,7 @@ export class CollectionsService extends PrismaService {
       },
     });
 
-    return cards.cardsCollection.map((cc) => new CardEntity(cc.card));
+    return collection.cardsCollection.map((cc) => new CardEntity(cc.card));
   }
 
   public async update(id: number, updateCollectionDto: UpdateCollectionDto) {
