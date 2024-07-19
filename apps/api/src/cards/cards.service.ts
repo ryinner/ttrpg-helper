@@ -24,7 +24,7 @@ export class CardsService extends PrismaService {
   }
 
   async findOne(id: number) {
-    const card = await this.card.findFirst({
+    const card = await this.card.findFirstOrThrow({
       include: {
         translates: {
           where: {

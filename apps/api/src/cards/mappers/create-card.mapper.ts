@@ -2,7 +2,7 @@ import { CreateCardDto } from '../dto/create-card.dto';
 import { Prisma } from '@prisma/client';
 
 export class CreateCardMapper {
-  toPrisma(createCardDto: CreateCardDto): Prisma.CardCreateInput {
+  public toPrisma(createCardDto: CreateCardDto): Prisma.CardCreateInput {
     return {
       translates: {
         create: {

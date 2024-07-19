@@ -2,7 +2,7 @@ import { Prisma } from '@prisma/client';
 import { UpdateCardDto } from '../dto/update-card.dto';
 
 export class UpdateCardMapper {
-  toPrisma(updateCardDto: UpdateCardDto): {
+  public toPrisma(updateCardDto: UpdateCardDto): {
     translate: Prisma.CardTranslateUpdateInput;
   } {
     const translateUpdate: Prisma.CardTranslateUpdateWithoutCardInput = {};

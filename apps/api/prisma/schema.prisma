@@ -83,13 +83,13 @@ model Collection {
   createdAt   DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt   DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
-  translates          CollectionTrasnlate[]
+  translates          CollectionTranslate[]
   CardCardsCollection CardCollection[]
 
   @@map("collections")
 }
 
-model CollectionTrasnlate {
+model CollectionTranslate {
   id           Int       @id @default(autoincrement())
   languageId   Int       @map("language_id")
   collectionId Int       @map("card_collection_id")

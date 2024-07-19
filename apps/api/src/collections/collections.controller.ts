@@ -27,14 +27,14 @@ export class CollectionsController {
     return this.collectionsService.create(createCollectionDto);
   }
 
-  @ApiOkResponse({
-    type: CollectionEntity,
-    isArray: true,
-  })
-  @Get()
-  findAll() {
-    return this.collectionsService.findAll();
-  }
+  // @ApiOkResponse({
+  //   type: CollectionEntity,
+  //   isArray: true,
+  // })
+  // @Get()
+  // findAll() {
+  //   return this.collectionsService.findAll();
+  // }
 
   @ApiOkResponse({
     type: CollectionEntity,
