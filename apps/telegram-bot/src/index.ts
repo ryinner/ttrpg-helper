@@ -1,4 +1,4 @@
-import { Telegraf } from 'telegraf';
+import { Markup, Telegraf } from 'telegraf';
 import { message } from 'telegraf/filters';
 
 if (typeof process.env.BOT_TOKEN !== 'string') {
@@ -8,10 +8,28 @@ if (typeof process.env.BOT_TOKEN !== 'string') {
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.on(message('text'), async (ctx) => {
-  const {
-    user: { username },
-  } = await ctx.getChatMember(ctx.chat.id);
-  await ctx.reply(`Hello ${username}`);
+  if (ctx.text === '/start') {
+    const {
+      user: { username },
+    } = await ctx.getChatMember(ctx.chat.id);
+
+    const inlineKeyBoard = Markup.inlineKeyboard([
+      Markup.button.callback('Test', 'Test'),
+      Markup.button.callback('Test2', 'Test2'),
+    ]);
+
+    const keyboard = Markup.keyboard([
+      [Markup.button.text('text'), Markup.button.text('text2')],
+    ]);
+
+    ctx.sendMessage(`Hello ${username}`, {
+      reply_markup: inlineKeyBoard.reply_markup,
+    });
+
+    ctx.sendMessage('test2', {
+      reply_markup: keyboard.reply_markup,
+    });
+  }
 });
 
 bot.launch();
