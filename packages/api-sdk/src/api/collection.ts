@@ -3,7 +3,7 @@ import type { ICollectionEntity } from '../@types/collection';
 import { BaseApi } from './api';
 
 export class CollectionApi extends BaseApi {
-  private prefix = 'collection';
+  private prefix = 'collections';
 
   public async get(): Promise<ICollectionEntity[]> {
     return await this.request(this.prefix, { method: 'GET' });
