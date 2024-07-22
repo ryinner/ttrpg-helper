@@ -1,6 +1,10 @@
 import { Telegraf } from 'telegraf';
 import { message } from 'telegraf/filters';
 
+if (typeof process.env.BOT_TOKEN !== 'string') {
+  throw new Error('Bot token is required');
+}
+
 const bot = new Telegraf(process.env.BOT_TOKEN);
 
 bot.on(message('text'), async (ctx) => {
@@ -11,3 +15,6 @@ bot.on(message('text'), async (ctx) => {
 });
 
 bot.launch();
+
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
