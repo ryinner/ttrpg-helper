@@ -1,5 +1,6 @@
 import { CollectionApi, EBaseUrls } from '@repo/api-sdk';
 import { Markup, Telegraf } from 'telegraf';
+import { helpHandler } from './handlers/help.hanlder';
 
 if (typeof process.env.BOT_TOKEN !== 'string') {
   throw new Error('Bot token is required');
@@ -35,23 +36,14 @@ bot.start(async (ctx) => {
       Markup.button.callback(collection.name, `collection-${collection.id}`),
     ];
   });
-  const keyboard = Markup.keyboard(buttons);
+  const keyboard = Markup.inlineKeyboard(buttons);
+
   await ctx.sendMessage('Выбери свою колоду', {
     reply_markup: keyboard.reply_markup,
   });
 });
 
-const helpMessages = [
-  '1. Выбери колоду: нажми на одну из кнопок',
-  '2. Посмотри колоду: все в чате',
-  '3. Наслаждайся игрой',
-];
-
-bot.help(async (ctx) => {
-  for (const message of helpMessages) {
-    await ctx.reply(message);
-  }
-});
+helpHandler(bot);
 
 bot.launch();
 
