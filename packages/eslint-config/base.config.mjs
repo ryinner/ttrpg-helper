@@ -45,6 +45,7 @@ export default [
       }],
       '@stylistic/ts/object-property-newline': 'off',
       '@stylistic/ts/brace-style': 'off',
+      '@stylistic/ts/no-extra-parens': 'off'
     }
   }
 ];

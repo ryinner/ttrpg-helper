@@ -1,6 +1,7 @@
 import { CollectionApi, EBaseUrls } from '@repo/api-sdk';
 import { Markup, Telegraf } from 'telegraf';
 import { helpHandler } from './handlers/help.hanlder';
+import type { InlineKeyboardButton } from 'telegraf/types';
 
 if (typeof process.env.BOT_TOKEN !== 'string') {
   throw new Error('Bot token is required');
@@ -41,6 +42,40 @@ bot.start(async (ctx) => {
   await ctx.sendMessage('Выбери свою колоду', {
     reply_markup: keyboard.reply_markup,
   });
+});
+
+async function cardsKeyboard(id: number) {
+  const cards = await collectionApi.cards(id);
+  const buttons: InlineKeyboardButton[][] = [[]];
+  cards.forEach((c, i) => {
+    const button = Markup.button.callback(c.name, `card-${c.id}`);
+    if (i % 2 < buttons.length) {
+      buttons.at(buttons.length - 1)?.push(button);
+    } else {
+      buttons.push([button]);
+    }
+  });
+
+  return Markup.inlineKeyboard(buttons);
+}
+
+bot.on('callback_query', async (ctx) => {
+  if ('data' in ctx.callbackQuery) {
+    const { data } = ctx.callbackQuery;
+    const [entity, id] = data.split('-');
+
+    switch (entity) {
+      case 'collection':
+        ctx.answerCbQuery('Ваша колода');
+        await ctx.sendMessage('Выберите способность', {
+          reply_markup: (await cardsKeyboard(Number(id))).reply_markup,
+        });
+        break;
+
+      default:
+        break;
+    }
+  }
 });
 
 helpHandler(bot);
