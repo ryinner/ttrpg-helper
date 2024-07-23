@@ -1,4 +1,4 @@
-import { CollectionApi, EBaseUrls } from '@repo/api-sdk';
+import { CollectionApi, EBaseUrls, CardApi } from '@repo/api-sdk';
 import { Markup, Telegraf } from 'telegraf';
 import { helpHandler } from './handlers/help.hanlder';
 import type { InlineKeyboardButton } from 'telegraf/types';
@@ -11,14 +11,17 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 const collectionApi = new CollectionApi({
   baseUrl: EBaseUrls.development,
 });
+const cardApi = new CardApi({
+  baseUrl: EBaseUrls.development,
+});
 
 const helloMessages = (username: string | undefined) => {
   return [
     `Привет ${username ?? 'друг'}!`,
     'Добро пожаловать в тестовую версию помощника мастера!',
     'Я создан для того, чтобы помогать мастерам и игрокам проводить игры :)',
-    'Пока что я умею только выдавать небольшие колоды карт для упрощения объяснения способностей персонажей: просто выбери интересующую тебя колоду снизу.',
-    'Но я готов учится и развиваться, и я буду очень рад, если ты поможешь мне в этом!',
+    'Пока что я умею только выдавать небольшие колоды карт для упрощения объяснения способностей персонажей: Но я готов учится и развиваться, и я буду очень рад, если ты поможешь мне в этом!',
+    'Выбери интересующую тебя колоду снизу.',
   ];
 };
 
@@ -66,12 +69,16 @@ bot.on('callback_query', async (ctx) => {
 
     switch (entity) {
       case 'collection':
-        ctx.answerCbQuery('Ваша колода');
-        await ctx.sendMessage('Выберите способность', {
+        ctx.answerCbQuery();
+        await ctx.sendMessage('Ваша колода', {
           reply_markup: (await cardsKeyboard(Number(id))).reply_markup,
         });
         break;
 
+      case 'card':
+        ctx.answerCbQuery();
+        ctx.sendMessage((await cardApi.getOne(Number(id))).description);
+        break;
       default:
         break;
     }
