@@ -10,23 +10,25 @@ const collectionApi = new CollectionApi({
   baseUrl: EBaseUrls.development,
 });
 
+const helloMessages = (username: string | undefined) => {
+  return [
+    `Привет ${username ?? 'друг'}!`,
+    'Добро пожаловать в тестовую версию помощника мастера!',
+    'Я создан для того, чтобы помогать мастерам и игрокам проводить игры :)',
+    'Пока что я умею только выдавать небольшие колоды карт для упрощения объяснения способностей персонажей: просто выбери интересующую тебя колоду снизу.',
+    'Но я готов учится и развиваться, и я буду очень рад, если ты поможешь мне в этом!',
+  ];
+};
+
 bot.start(async (ctx) => {
   const {
     user: { username },
   } = await ctx.getChatMember(ctx.chat.id);
-  await ctx.sendMessage(`Привет ${username}!`);
-  await ctx.sendMessage(
-    'Добро пожаловать в тестовую версию помощника мастера!',
-  );
-  await ctx.reply(
-    'Я создан для того, чтобы помогать мастерам и игрокам проводить игры :)',
-  );
-  await ctx.reply(
-    'Пока что я умею только выдавать небольшие колоды карт для упрощения объяснения способностей персонажей: просто выбери интересующую тебя колоду снизу.',
-  );
-  await ctx.reply(
-    'Но я готов учится и развиваться, и я буду очень рад, если ты поможешь мне в этом!',
-  );
+
+  for (const message of helloMessages(username)) {
+    await ctx.reply(message);
+  }
+
   const collections = await collectionApi.get();
   const buttons = collections.map((collection) => {
     return [
@@ -39,10 +41,16 @@ bot.start(async (ctx) => {
   });
 });
 
+const helpMessages = [
+  '1. Выбери колоду: нажми на одну из кнопок',
+  '2. Посмотри колоду: все в чате',
+  '3. Наслаждайся игрой',
+];
+
 bot.help(async (ctx) => {
-  await ctx.reply('1. Выбери колоду: нажми на одну из кнопок');
-  await ctx.reply('2. Посмотри колоду: все в чате');
-  await ctx.reply('3. Наслаждайся игрой');
+  for (const message of helpMessages) {
+    await ctx.reply(message);
+  }
 });
 
 bot.launch();
