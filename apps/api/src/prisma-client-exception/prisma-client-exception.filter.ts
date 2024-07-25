@@ -17,8 +17,6 @@ export class PrismaClientExceptionFilter
     exception: Prisma.PrismaClientKnownRequestError,
     host: ArgumentsHost,
   ) {
-    console.error(exception.message);
-
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const message = exception.message.replace(/\n/g, '');
