@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { PrismaService } from './../../src/prisma/prisma.service';
 import { CollectionEntity } from './entities/collection.entity';
 import { CreateCollectionMapper } from './mappers/create-collection.mapper';
 import { Languages } from '@repo/api-sdk';
 import { UpdateCollectionMapper } from './mappers/update-collection.mapper';
-import { CardEntity } from 'src/cards/entities/card.entity';
+import { CardEntity } from './../../src/cards/entities/card.entity';
 
 @Injectable()
 export class CollectionsService extends PrismaService {
