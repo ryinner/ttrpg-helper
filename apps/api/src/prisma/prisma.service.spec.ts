@@ -1,5 +1,6 @@
-import { Test, type TestingModule } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from './prisma.service';
+import { PrismaClient } from '@prisma/client';
 
 describe('PrismaService', () => {
   let service: PrismaService;
@@ -14,5 +15,9 @@ describe('PrismaService', () => {
 
   it('should be defined', () => {
     expect(service).toBeDefined();
+  });
+
+  it('should be instance of prisma client', () => {
+    expect(service).toBeInstanceOf(PrismaClient);
   });
 });
