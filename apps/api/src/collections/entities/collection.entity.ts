@@ -4,7 +4,9 @@ import { ICollectionEntity } from '@repo/api-sdk';
 
 export class CollectionEntity implements ICollectionEntity {
   constructor(
-    collection: Partial<Collection & { translates: CollectionTranslate[] }>,
+    collection: Partial<
+      Collection & { translates: Partial<CollectionTranslate>[] }
+    >,
   ) {
     this.id = collection.id;
     this.name = collection.translates[0].name;

@@ -18,6 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CardEntity } from './entities/card.entity';
+import { cardEntityExample } from './entities/card.entity.example';
 
 @ApiTags('cards')
 @Controller('cards')
@@ -28,6 +29,7 @@ export class CardsController {
   @ApiCreatedResponse({
     type: CardEntity,
     description: 'Create a new card in db',
+    example: cardEntityExample,
   })
   create(@Body() createCardDto: CreateCardDto) {
     return this.cardsService.create(createCardDto);
@@ -37,6 +39,7 @@ export class CardsController {
   @ApiOkResponse({
     type: CardEntity,
     description: 'Get card by id',
+    example: cardEntityExample,
   })
   @ApiNotFoundResponse()
   findOne(@Param('id', ParseIntPipe) id: number) {
@@ -46,6 +49,7 @@ export class CardsController {
   @Patch(':id')
   @ApiOkResponse({
     type: CardEntity,
+    example: cardEntityExample,
   })
   update(
     @Param('id', ParseIntPipe) id: number,

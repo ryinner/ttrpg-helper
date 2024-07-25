@@ -19,6 +19,11 @@ import {
 } from '@nestjs/swagger';
 import { CollectionEntity } from './entities/collection.entity';
 import { CardEntity } from '@/cards/entities/card.entity';
+import {
+  collectionEntityArrayExample,
+  collectionEntityExample,
+} from './entities/collection.entity.example';
+import { cardEntityArrayExample } from '@/cards/entities/card.entity.example';
 
 @ApiTags('collections')
 @Controller('collections')
@@ -27,6 +32,7 @@ export class CollectionsController {
 
   @ApiCreatedResponse({
     type: CollectionEntity,
+    example: collectionEntityExample,
   })
   @Post()
   create(@Body() createCollectionDto: CreateCollectionDto) {
@@ -36,6 +42,7 @@ export class CollectionsController {
   @ApiOkResponse({
     type: CollectionEntity,
     isArray: true,
+    example: collectionEntityArrayExample,
   })
   @Get()
   findAll() {
@@ -44,6 +51,7 @@ export class CollectionsController {
 
   @ApiOkResponse({
     type: CollectionEntity,
+    example: collectionEntityExample,
   })
   @ApiNotFoundResponse()
   @Get(':id')
@@ -54,14 +62,17 @@ export class CollectionsController {
   @ApiOkResponse({
     type: CardEntity,
     isArray: true,
+    example: cardEntityArrayExample,
   })
   @Get(':id/cards')
   findCards(@Param('id', ParseIntPipe) id: number) {
     return this.collectionsService.findCards(id);
   }
 
+  @ApiNotFoundResponse()
   @ApiOkResponse({
     type: CollectionEntity,
+    example: collectionEntityExample,
   })
   @Patch(':id')
   update(
@@ -71,6 +82,7 @@ export class CollectionsController {
     return this.collectionsService.update(id, updateCollectionDto);
   }
 
+  @ApiNotFoundResponse()
   @ApiOkResponse()
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
