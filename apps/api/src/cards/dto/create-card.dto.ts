@@ -17,7 +17,7 @@ export class CreateCardDto implements ICreateCardDto {
   @IsString()
   @IsNotEmpty()
   @MaxLength(512)
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, maxLength: 512 })
   description: string;
 
   @IsInt()
