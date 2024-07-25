@@ -18,7 +18,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { CollectionEntity } from './entities/collection.entity';
-import { CardEntity } from './../../src/cards/entities/card.entity';
+import { CardEntity } from '@/cards/entities/card.entity';
 
 @ApiTags('collections')
 @Controller('collections')

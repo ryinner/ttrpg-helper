@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
-import { PrismaService } from './../../src/prisma/prisma.service';
+import { PrismaService } from '@/prisma/prisma.service';
 import { CreateCardMapper } from './mappers/create-card.mapper';
 import { CardEntity } from './entities/card.entity';
 import { Languages } from '@repo/api-sdk';
