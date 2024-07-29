@@ -6,6 +6,6 @@ export class CreateCollectionDto implements ICreateCollectionDto {
   @IsString()
   @MaxLength(64)
   @IsNotEmpty()
-  @ApiProperty({ required: true })
+  @ApiProperty({ required: true, maxLength: 64 })
   name: string;
 }
