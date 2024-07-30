@@ -12,7 +12,9 @@ import { CardsService } from './cards.service';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
@@ -20,6 +22,7 @@ import {
 import { CardEntity } from './entities/card.entity';
 import { cardEntityExample } from './entities/card.entity.example';
 
+@ApiBearerAuth()
 @ApiTags('cards')
 @Controller('cards')
 export class CardsController {
@@ -31,6 +34,7 @@ export class CardsController {
     description: 'Create a new card in db',
     example: cardEntityExample,
   })
+  @ApiForbiddenResponse()
   create(@Body() createCardDto: CreateCardDto) {
     return this.cardsService.create(createCardDto);
   }
@@ -42,6 +46,7 @@ export class CardsController {
     example: cardEntityExample,
   })
   @ApiNotFoundResponse()
+  @ApiForbiddenResponse()
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.cardsService.findOne(id);
   }
@@ -51,6 +56,7 @@ export class CardsController {
     type: CardEntity,
     example: cardEntityExample,
   })
+  @ApiForbiddenResponse()
   update(
     @Param('id', ParseIntPipe) id: number,
     @Body() updateCardDto: UpdateCardDto,
@@ -60,6 +66,7 @@ export class CardsController {
 
   @Delete(':id')
   @ApiOkResponse()
+  @ApiForbiddenResponse()
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.cardsService.remove(id);
   }

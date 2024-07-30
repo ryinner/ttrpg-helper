@@ -12,7 +12,9 @@ import { CollectionsService } from './collections.service';
 import { CreateCollectionDto } from './dto/create-collection.dto';
 import { UpdateCollectionDto } from './dto/update-collection.dto';
 import {
+  ApiBearerAuth,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiTags,
@@ -25,6 +27,7 @@ import {
 } from './entities/collection.entity.example';
 import { cardEntityArrayExample } from '@/cards/entities/card.entity.example';
 
+@ApiBearerAuth()
 @ApiTags('collections')
 @Controller('collections')
 export class CollectionsController {
@@ -34,6 +37,7 @@ export class CollectionsController {
     type: CollectionEntity,
     example: collectionEntityExample,
   })
+  @ApiForbiddenResponse()
   @Post()
   create(@Body() createCollectionDto: CreateCollectionDto) {
     return this.collectionsService.create(createCollectionDto);
@@ -44,6 +48,7 @@ export class CollectionsController {
     isArray: true,
     example: collectionEntityArrayExample,
   })
+  @ApiForbiddenResponse()
   @Get()
   findAll() {
     return this.collectionsService.findAll();
@@ -53,6 +58,7 @@ export class CollectionsController {
     type: CollectionEntity,
     example: collectionEntityExample,
   })
+  @ApiForbiddenResponse()
   @ApiNotFoundResponse()
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
@@ -64,12 +70,14 @@ export class CollectionsController {
     isArray: true,
     example: cardEntityArrayExample,
   })
+  @ApiForbiddenResponse()
   @Get(':id/cards')
   findCards(@Param('id', ParseIntPipe) id: number) {
     return this.collectionsService.findCards(id);
   }
 
   @ApiNotFoundResponse()
+  @ApiForbiddenResponse()
   @ApiOkResponse({
     type: CollectionEntity,
     example: collectionEntityExample,
@@ -83,6 +91,7 @@ export class CollectionsController {
   }
 
   @ApiNotFoundResponse()
+  @ApiForbiddenResponse()
   @ApiOkResponse()
   @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
