@@ -4,6 +4,8 @@ import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as packageJson from '../package.json';
 import { PrismaClientExceptionFilter } from './prisma-client-exception/prisma-client-exception.filter';
+import { ConfigService } from '@nestjs/config';
+import { BaseConfig } from './config/base.config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -22,7 +24,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('swagger-docs', app, document);
-
-  await app.listen(3000);
+  const configService = app.get(ConfigService);
+  await app.listen(configService.get<BaseConfig>('base').port);
 }
 bootstrap();
