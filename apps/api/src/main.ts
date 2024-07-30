@@ -20,6 +20,8 @@ async function bootstrap() {
     .setTitle('TTRPG helper API')
     .setDescription('App for helping dungeon masters :)')
     .setVersion(packageJson.version)
+    .setContact('ryinner', 'https://github.com/ryinner/ttrpg-helper/issues', '')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
