@@ -141,3 +141,19 @@ model CardCollection {
   @@unique([cardId, collectionId])
   @@map("cards_collections")
 }
+
+model Client {
+  id        Int       @id @default(autoincrement())
+  username  String
+  password  String
+  type      UserType  @default(User)
+  createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
+
+  @@map("clients")
+}
+
+enum UserType {
+  Application
+  User
+}
