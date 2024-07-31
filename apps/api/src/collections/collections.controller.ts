@@ -1,16 +1,15 @@
+import { CardEntity } from '@/cards/entities/card.entity';
+import { cardEntityArrayExample } from '@/cards/entities/card.entity.example';
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Patch,
-  Param,
+  Controller,
   Delete,
+  Get,
+  Param,
   ParseIntPipe,
+  Patch,
+  Post,
 } from '@nestjs/common';
-import { CollectionsService } from './collections.service';
-import { CreateCollectionDto } from './dto/create-collection.dto';
-import { UpdateCollectionDto } from './dto/update-collection.dto';
 import {
   ApiBearerAuth,
   ApiCreatedResponse,
@@ -19,13 +18,14 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
+import { CollectionsService } from './collections.service';
+import { CreateCollectionDto } from './dto/create-collection.dto';
+import { UpdateCollectionDto } from './dto/update-collection.dto';
 import { CollectionEntity } from './entities/collection.entity';
-import { CardEntity } from '@/cards/entities/card.entity';
 import {
   collectionEntityArrayExample,
   collectionEntityExample,
 } from './entities/collection.entity.example';
-import { cardEntityArrayExample } from '@/cards/entities/card.entity.example';
 
 @ApiBearerAuth()
 @ApiTags('collections')
