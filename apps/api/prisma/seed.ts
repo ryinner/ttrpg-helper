@@ -168,17 +168,20 @@ async function cardsCollections(): Promise<void> {
 }
 
 async function clients(): Promise<void> {
+  const type = ClientType.Application;
+  const password = await bcrypt.hash(
+    process.env.TELEGRAM_BOT_PASSWORD,
+    parseInt(process.env.ROUNDS_OF_HASHING),
+  );
   await prisma.client.upsert({
     create: {
       username: process.env.TELEGRAM_BOT_LOGIN,
-      password: await bcrypt.hash(
-        process.env.TELEGRAM_BOT_PASSWORD,
-        parseInt(process.env.ROUNDS_OF_HASHING),
-      ),
-      type: ClientType.Application,
+      password,
+      type,
     },
     update: {
-      type: ClientType.Application,
+      password,
+      type,
     },
     where: {
       username: process.env.TELEGRAM_BOT_LOGIN,
