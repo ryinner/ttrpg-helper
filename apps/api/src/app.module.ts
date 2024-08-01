@@ -8,6 +8,7 @@ import { CollectionsModule } from './collections/collections.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { authConfig } from './config/auth.config';
+import { ClientsModule } from './clients/clients.module';
 import baseConfig from './config/base.config';
 
 @Module({
@@ -21,6 +22,7 @@ import baseConfig from './config/base.config';
     CardsModule,
     CollectionsModule,
     AuthModule,
+    ClientsModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

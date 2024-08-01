@@ -3,4 +3,8 @@ interface ISignIn {
   password: string;
 }
 
-export type { ISignIn };
+interface IAuthEntity {
+  accessToken: string;
+}
+
+export type { IAuthEntity, ISignIn };

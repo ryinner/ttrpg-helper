@@ -1,7 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { ISignIn } from '@repo/api-sdk';
 import { IsNotEmpty, IsString } from 'class-validator';
 
-export class SignInDto {
+export class SignInDto implements ISignIn {
   @IsNotEmpty()
   @ApiProperty({ required: true })
   username: string;
