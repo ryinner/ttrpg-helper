@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import { Languages, TTRPGS, Tags } from '@repo/api-sdk';
+import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
@@ -170,7 +171,10 @@ async function clients(): Promise<void> {
   await prisma.client.upsert({
     create: {
       username: process.env.TELEGRAM_BOT_LOGIN,
-      password: process.env.TELEGRAM_BOT_PASSWORD,
+      password: await bcrypt.hash(
+        process.env.TELEGRAM_BOT_PASSWORD,
+        parseInt(process.env.ROUNDS_OF_HASHING),
+      ),
     },
     update: {},
     where: {
