@@ -1,5 +1,10 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ApiForbiddenResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
 import { Public } from './public.decorator';
@@ -11,8 +16,9 @@ export class AuthController {
 
   @Public()
   @Post('/sign-in')
-  @ApiOkResponse()
-  @ApiForbiddenResponse()
+  @ApiCreatedResponse()
+  @ApiNotFoundResponse()
+  @ApiUnauthorizedResponse()
   signIn(@Body() signInDto: SignInDto) {
     return this.authService.signIn(signInDto);
   }
