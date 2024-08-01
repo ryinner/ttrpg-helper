@@ -1,3 +1,4 @@
+import { ClientsModule } from '@/clients/clients.module';
 import { AuthConfig } from '@/config/auth.config';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { Module } from '@nestjs/common';
@@ -21,6 +22,7 @@ import { JwtStrategy } from './jwt.strategy';
         },
       }),
     }),
+    ClientsModule,
   ],
   controllers: [AuthController],
   providers: [AuthService, JwtStrategy],
