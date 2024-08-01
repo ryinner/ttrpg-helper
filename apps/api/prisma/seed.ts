@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import { ClientType, PrismaClient } from '@prisma/client';
 import { Languages, TTRPGS, Tags } from '@repo/api-sdk';
 import * as bcrypt from 'bcrypt';
 
@@ -175,8 +175,11 @@ async function clients(): Promise<void> {
         process.env.TELEGRAM_BOT_PASSWORD,
         parseInt(process.env.ROUNDS_OF_HASHING),
       ),
+      type: ClientType.Application,
     },
-    update: {},
+    update: {
+      type: ClientType.Application,
+    },
     where: {
       username: process.env.TELEGRAM_BOT_LOGIN,
     },
