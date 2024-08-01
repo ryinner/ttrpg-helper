@@ -40,7 +40,6 @@ export class AuthService {
     return {
       accessToken: this.jwtService.sign({
         id: user.id,
-        username: user.username,
       }),
     };
   }
