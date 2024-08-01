@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { ApiForbiddenResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
-import { ApiForbiddenResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { Public } from './public.decorator';
 
 @ApiTags('auth')
@@ -14,7 +14,6 @@ export class AuthController {
   @ApiOkResponse()
   @ApiForbiddenResponse()
   signIn(@Body() signInDto: SignInDto) {
-    console.log(signInDto);
-    return {};
+    return this.authService.signIn(signInDto);
   }
 }
