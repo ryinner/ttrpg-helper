@@ -166,9 +166,22 @@ async function cardsCollections(): Promise<void> {
   }
 }
 
+async function clients(): Promise<void> {
+  await prisma.client.upsert({
+    create: {
+      username: process.env.TELEGRAM_BOT_LOGIN,
+      password: process.env.TELEGRAM_BOT_PASSWORD,
+    },
+    update: {},
+    where: {
+      username: process.env.TELEGRAM_BOT_LOGIN,
+    },
+  });
+}
+
 async function main(): Promise<void> {
   await languages();
-  await Promise.all([ttrpgs(), tags(), collections(), cards()]);
+  await Promise.all([ttrpgs(), tags(), collections(), cards(), clients()]);
   await cardsCollections();
 }
 
