@@ -30,7 +30,7 @@ function createSDK<Modules extends TModulesAvailableCreateSDKSettings>({
     signIn,
   };
   const app = {
-    // TODO: think maybe in can be a better way to cast type
+    // TODO: maybe exist a better way to cast type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...modulesNames.reduce<any>((accumulator, moduleName) => {
       accumulator[moduleName] = new modules[moduleName](apiConfig);
