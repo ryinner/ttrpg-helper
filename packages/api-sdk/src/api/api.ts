@@ -1,28 +1,36 @@
-enum EBaseUrls {
-  development = 'http://localhost:3000',
-  production = 'https://products',
-}
+import type { ISignInDto } from '../@types/auth';
 
 interface IConfig {
-  baseUrl?: EBaseUrls;
+  signIn: ISignInDto;
+}
+
+interface IRequestSettings extends RequestInit {
+  auth?: boolean;
 }
 
 abstract class BaseApi {
   private baseUrl: string;
 
+  private signInDto: ISignInDto;
+
   constructor(config: IConfig) {
-    this.baseUrl = config.baseUrl ?? EBaseUrls.production;
+    this.baseUrl = 'http://localhost:3000';
+    this.signInDto = config.signIn;
   }
 
   protected async request<T>(
     endpoint: string,
-    options: RequestInit,
+    { auth = true, ...options }: IRequestSettings,
   ): Promise<T> {
     const url = `${this.baseUrl}/${endpoint}`;
 
     const baseHeaders = {
       'Content-Type': 'application/json',
     };
+
+    if (auth) {
+      console.log(this.signInDto);
+    }
 
     const fullOptions = Object.assign({}, options, { headers: baseHeaders });
 
@@ -37,4 +45,4 @@ abstract class BaseApi {
   }
 }
 
-export { BaseApi, type IConfig, EBaseUrls };
+export { BaseApi, type IConfig };
