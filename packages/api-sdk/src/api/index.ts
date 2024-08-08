@@ -1,4 +1,5 @@
 import type { ISignInDto } from '../@types/auth';
+import { createConfig } from './api';
 import { CardApi } from './card';
 import { CollectionApi } from './collection';
 
@@ -26,14 +27,14 @@ function createSDK<Modules extends TModulesAvailableCreateSDKSettings>({
   signIn,
   modules: modulesNames,
 }: ICreateSDKSettings<Modules>): TSDK<Modules> {
-  const apiConfig = {
+  createConfig({
     signIn,
-  };
+  });
   const app = {
     // TODO: maybe exist a better way to cast type
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     ...modulesNames.reduce<any>((accumulator, moduleName) => {
-      accumulator[moduleName] = new modules[moduleName](apiConfig);
+      accumulator[moduleName] = new modules[moduleName]();
       return accumulator;
     }, {}),
   };

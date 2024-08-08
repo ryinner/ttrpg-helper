@@ -2,20 +2,26 @@ import type { ISignInDto } from '../@types/auth';
 
 interface IConfig {
   signIn: ISignInDto;
+  accessToken?: string;
 }
 
 interface IRequestSettings extends RequestInit {
   auth?: boolean;
 }
 
+let config!: IConfig;
+
+export function createConfig({ signIn }: IConfig) {
+  config = {
+    signIn,
+  };
+}
+
 abstract class BaseApi {
   private baseUrl: string;
 
-  private signInDto: ISignInDto;
-
-  constructor(config: IConfig) {
+  constructor() {
     this.baseUrl = 'http://localhost:3000';
-    this.signInDto = config.signIn;
   }
 
   protected async request<T>(
@@ -29,7 +35,9 @@ abstract class BaseApi {
     };
 
     if (auth) {
-      console.log(this.signInDto);
+      if (config.accessToken === undefined) {
+        // auth
+      }
     }
 
     const fullOptions = Object.assign({}, options, { headers: baseHeaders });
