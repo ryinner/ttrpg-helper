@@ -1,21 +1,13 @@
-import { createSDK } from '@repo/api-sdk';
 import { Markup, Telegraf } from 'telegraf';
 import type { InlineKeyboardButton } from 'telegraf/types';
 import { helpHandler } from './handlers/help.hanlder';
+import { api } from './utilities/api';
 
 if (typeof process.env.BOT_TOKEN !== 'string') {
   throw new Error('Bot token is required');
 }
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-
-const api = createSDK({
-  signIn: {
-    username: process.env.SDK_USERNAME,
-    password: process.env.SDK_PASSWORD,
-  },
-  modules: ['cards', 'collection'],
-});
 
 const helloMessages = (username: string | undefined) => {
   return [
