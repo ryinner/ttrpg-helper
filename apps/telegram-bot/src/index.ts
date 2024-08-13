@@ -32,17 +32,18 @@ bot.start(async (ctx) => {
     user: { username },
   } = await ctx.getChatMember(ctx.chat.id);
 
-  for (const message of helloMessages(username)) {
-    await ctx.reply(message);
-  }
-
   const collections = await api.collection.get();
   const buttons = collections.map((collection) => {
     return [
       Markup.button.callback(collection.name, `collection-${collection.id}`),
     ];
   });
+
   const keyboard = Markup.inlineKeyboard(buttons);
+
+  for (const message of helloMessages(username)) {
+    await ctx.reply(message);
+  }
 
   await ctx.sendMessage('Выбери свою колоду', {
     reply_markup: keyboard.reply_markup,

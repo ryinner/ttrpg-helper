@@ -31,7 +31,7 @@ abstract class BaseApi {
     { auth = true, headers, body, ...options }: IRequestSettings,
   ): Promise<T> {
     const url = `${this.baseUrl}/${endpoint}`;
-    console.log(url);
+
     if (headers === undefined) {
       headers = new Headers();
     }
@@ -49,7 +49,7 @@ abstract class BaseApi {
     }
 
     if (auth) {
-      headers.set('Authorization', `Bearer ${this.getToken()}`);
+      headers.set('Authorization', `Bearer ${await this.getToken()}`);
     }
 
     const fullOptions = {
@@ -67,7 +67,7 @@ abstract class BaseApi {
 
     // token has been expired try re auth
     if (response.status === 403) {
-      headers.set('Authorization', `Bearer ${this.getToken(true)}`);
+      headers.set('Authorization', `Bearer ${await this.getToken(true)}`);
       response = await fetch(url, fullOptions);
 
       if (response.ok) {
