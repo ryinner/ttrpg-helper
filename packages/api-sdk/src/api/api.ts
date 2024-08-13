@@ -31,16 +31,16 @@ abstract class BaseApi {
     { auth = true, headers, body, ...options }: IRequestSettings,
   ): Promise<T> {
     const url = `${this.baseUrl}/${endpoint}`;
-
+    console.log(url);
     if (headers === undefined) {
       headers = new Headers();
     }
-    if (headers.get('Content-Type')) {
-      headers.set('Content-Type', 'application/json');
+    if (headers.get('content-type') === null) {
+      headers.set('content-type', 'application/json');
     }
 
     if (typeof body === 'object') {
-      switch (headers.get('Content-Type')) {
+      switch (headers.get('content-type')) {
         // add form data handler
         default:
           body = JSON.stringify(body);
@@ -55,11 +55,12 @@ abstract class BaseApi {
       headers.set('Authorization', `Bearer ${config.accessToken}`);
     }
 
-    const fullOptions: RequestInit = {
+    const fullOptions = {
       ...options,
       headers,
       body,
-    };
+    } satisfies RequestInit;
+
     const response = await fetch(url, fullOptions);
 
     if (response.ok) {
@@ -67,13 +68,16 @@ abstract class BaseApi {
       return <T>data;
     }
 
+    // reauth
+
     throw new Error(response.statusText);
   }
 
   private async auth(): Promise<IAuthEntity> {
-    return await this.request<IAuthEntity>('/auth/sing-in', {
+    return await this.request<IAuthEntity>('auth/sign-in', {
       auth: false,
       body: config.signIn,
+      method: 'POST',
     });
   }
 }

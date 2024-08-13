@@ -50,4 +50,12 @@ const sdk = createSDK({
   modules: ['cards'],
 });
 
-console.log(sdk.cards.getOne(1));
+sdk.cards
+  .getOne(1)
+  .then((res) => {
+    console.log(res);
+    return;
+  })
+  .catch((e) => {
+    console.log(e);
+  });
