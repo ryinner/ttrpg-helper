@@ -11,7 +11,7 @@ function helloMessagesFactory(username: string | undefined): string[] {
   ];
 }
 
-export async function startHandler(bot: Telegraf) {
+export function startHandler(bot: Telegraf) {
   bot.start(async (ctx) => {
     const {
       user: { username },

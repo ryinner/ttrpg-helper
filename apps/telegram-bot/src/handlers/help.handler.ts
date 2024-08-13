@@ -6,7 +6,7 @@ const messages = [
   '3. Наслаждайся игрой',
 ];
 
-export async function helpHandler(bot: Telegraf) {
+export function helpHandler(bot: Telegraf) {
   bot.help(async (ctx) => {
     for (const message of messages) {
       await ctx.reply(message);
