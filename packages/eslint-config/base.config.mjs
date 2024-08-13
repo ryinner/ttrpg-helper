@@ -17,6 +17,7 @@ export default [
   pluginStylisticTs.configs['all-flat'],
   {
     rules: {
+      '@typescript-eslint/no-unused-vars': ['error', { destructuredArrayIgnorePattern: '^_' }],
       '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'angle-bracket' }],
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', fixStyle: 'inline-type-imports' }],
       '@stylistic/ts/indent': ['error', 2],

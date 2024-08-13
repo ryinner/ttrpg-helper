@@ -1,40 +1,98 @@
-enum EBaseUrls {
-  development = 'http://localhost:3000',
-  production = 'https://products',
-}
+import type { IAuthEntity, ISignInDto } from '../@types/auth';
 
 interface IConfig {
-  baseUrl?: EBaseUrls;
+  signIn: ISignInDto;
+  accessToken?: string;
+}
+
+interface IRequestSettings extends Omit<RequestInit, 'body' | 'headers'> {
+  auth?: boolean;
+  headers?: Headers;
+  body?: RequestInit['body'] | object;
+}
+
+let config!: IConfig;
+
+export function createConfig({ signIn }: IConfig) {
+  config = {
+    signIn,
+  };
 }
 
 abstract class BaseApi {
   private baseUrl: string;
 
-  constructor(config: IConfig) {
-    this.baseUrl = config.baseUrl ?? EBaseUrls.production;
+  constructor() {
+    this.baseUrl = 'http://localhost:3000';
   }
 
   protected async request<T>(
     endpoint: string,
-    options: RequestInit,
+    { auth = true, headers, body, ...options }: IRequestSettings,
   ): Promise<T> {
     const url = `${this.baseUrl}/${endpoint}`;
 
-    const baseHeaders = {
-      'Content-Type': 'application/json',
-    };
+    if (headers === undefined) {
+      headers = new Headers();
+    }
+    if (headers.get('content-type') === null) {
+      headers.set('content-type', 'application/json');
+    }
 
-    const fullOptions = Object.assign({}, options, { headers: baseHeaders });
+    if (typeof body === 'object') {
+      switch (headers.get('content-type')) {
+        // add form data handler
+        default:
+          body = JSON.stringify(body);
+          break;
+      }
+    }
 
-    const response = await fetch(url, fullOptions);
+    if (auth) {
+      headers.set('Authorization', `Bearer ${await this.getToken()}`);
+    }
+
+    const fullOptions = {
+      ...options,
+      headers,
+      body,
+    } satisfies RequestInit;
+
+    let response = await fetch(url, fullOptions);
 
     if (response.ok) {
       const data = await response.json();
       return <T>data;
     }
 
+    // token has been expired try re auth
+    if (response.status === 403) {
+      headers.set('Authorization', `Bearer ${await this.getToken(true)}`);
+      response = await fetch(url, fullOptions);
+
+      if (response.ok) {
+        const data = await response.json();
+        return <T>data;
+      }
+    }
+
     throw new Error(response.statusText);
+  }
+
+  private async getToken(hard = false): Promise<string> {
+    if (hard || config.accessToken === undefined) {
+      config.accessToken = (await this.auth()).accessToken;
+    }
+    return config.accessToken;
+  }
+
+  private async auth(): Promise<IAuthEntity> {
+    return await this.request<IAuthEntity>('auth/sign-in', {
+      auth: false,
+      body: config.signIn,
+      method: 'POST',
+    });
   }
 }
 
-export { BaseApi, type IConfig, EBaseUrls };
+export { BaseApi, type IConfig };

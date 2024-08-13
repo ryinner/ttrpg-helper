@@ -7,6 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
+import { AuthEntity } from './entity/auth.entity';
 import { Public } from './public.decorator';
 
 @ApiTags('auth')
@@ -16,7 +17,9 @@ export class AuthController {
 
   @Public()
   @Post('/sign-in')
-  @ApiCreatedResponse()
+  @ApiCreatedResponse({
+    type: AuthEntity,
+  })
   @ApiNotFoundResponse()
   @ApiUnauthorizedResponse()
   signIn(@Body() signInDto: SignInDto) {
