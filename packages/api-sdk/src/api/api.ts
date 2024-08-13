@@ -1,12 +1,14 @@
-import type { ISignInDto } from '../@types/auth';
+import type { IAuthEntity, ISignInDto } from '../@types/auth';
 
 interface IConfig {
   signIn: ISignInDto;
   accessToken?: string;
 }
 
-interface IRequestSettings extends RequestInit {
+interface IRequestSettings extends Omit<RequestInit, 'body' | 'headers'> {
   auth?: boolean;
+  headers?: Headers;
+  body?: RequestInit['body'] | object;
 }
 
 let config!: IConfig;
@@ -26,22 +28,38 @@ abstract class BaseApi {
 
   protected async request<T>(
     endpoint: string,
-    { auth = true, ...options }: IRequestSettings,
+    { auth = true, headers, body, ...options }: IRequestSettings,
   ): Promise<T> {
     const url = `${this.baseUrl}/${endpoint}`;
 
-    const baseHeaders = {
-      'Content-Type': 'application/json',
-    };
+    if (headers === undefined) {
+      headers = new Headers();
+    }
+    if (headers.get('Content-Type')) {
+      headers.set('Content-Type', 'application/json');
+    }
 
-    if (auth) {
-      if (config.accessToken === undefined) {
-        // auth
+    if (typeof body === 'object') {
+      switch (headers.get('Content-Type')) {
+        // add form data handler
+        default:
+          body = JSON.stringify(body);
+          break;
       }
     }
 
-    const fullOptions = Object.assign({}, options, { headers: baseHeaders });
+    if (auth) {
+      if (config.accessToken === undefined) {
+        config.accessToken = (await this.auth()).accessToken;
+      }
+      headers.set('Authorization', `Bearer ${config.accessToken}`);
+    }
 
+    const fullOptions: RequestInit = {
+      ...options,
+      headers,
+      body,
+    };
     const response = await fetch(url, fullOptions);
 
     if (response.ok) {
@@ -50,6 +68,13 @@ abstract class BaseApi {
     }
 
     throw new Error(response.statusText);
+  }
+
+  private async auth(): Promise<IAuthEntity> {
+    return await this.request<IAuthEntity>('/auth/sing-in', {
+      auth: false,
+      body: config.signIn,
+    });
   }
 }
 
