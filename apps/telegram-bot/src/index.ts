@@ -1,46 +1,14 @@
 import { Markup, Telegraf } from 'telegraf';
 import type { InlineKeyboardButton } from 'telegraf/types';
-import { helpHandler } from './handlers/help.hanlder';
-import { api } from './utilities/api';
+import { helpHandler } from './handlers/help.handler';
+import { startHandler } from './handlers/start.handler';
+import { api } from './utilities/api.utility';
 
 if (typeof process.env.BOT_TOKEN !== 'string') {
   throw new Error('Bot token is required');
 }
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-
-const helloMessages = (username: string | undefined) => {
-  return [
-    `Привет ${username ?? 'друг'}!`,
-    'Добро пожаловать в тестовую версию помощника мастера!',
-    'Я создан для того, чтобы помогать мастерам и игрокам проводить игры :)',
-    'Пока что я умею только выдавать небольшие колоды карт для упрощения объяснения способностей персонажей: Но я готов учится и развиваться, и я буду очень рад, если ты поможешь мне в этом!',
-    'Выбери интересующую тебя колоду снизу.',
-  ];
-};
-
-bot.start(async (ctx) => {
-  const {
-    user: { username },
-  } = await ctx.getChatMember(ctx.chat.id);
-
-  const collections = await api.collection.get();
-  const buttons = collections.map((collection) => {
-    return [
-      Markup.button.callback(collection.name, `collection-${collection.id}`),
-    ];
-  });
-
-  const keyboard = Markup.inlineKeyboard(buttons);
-
-  for (const message of helloMessages(username)) {
-    await ctx.reply(message);
-  }
-
-  await ctx.sendMessage('Выбери свою колоду', {
-    reply_markup: keyboard.reply_markup,
-  });
-});
 
 async function cardsKeyboard(id: number) {
   const cards = await api.collection.cards(id);
@@ -80,6 +48,7 @@ bot.on('callback_query', async (ctx) => {
   }
 });
 
+startHandler(bot);
 helpHandler(bot);
 
 bot.launch();
