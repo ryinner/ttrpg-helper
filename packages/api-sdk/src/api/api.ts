@@ -49,10 +49,7 @@ abstract class BaseApi {
     }
 
     if (auth) {
-      if (config.accessToken === undefined) {
-        config.accessToken = (await this.auth()).accessToken;
-      }
-      headers.set('Authorization', `Bearer ${config.accessToken}`);
+      headers.set('Authorization', `Bearer ${this.getToken()}`);
     }
 
     const fullOptions = {
@@ -61,16 +58,32 @@ abstract class BaseApi {
       body,
     } satisfies RequestInit;
 
-    const response = await fetch(url, fullOptions);
+    let response = await fetch(url, fullOptions);
 
     if (response.ok) {
       const data = await response.json();
       return <T>data;
     }
 
-    // reauth
+    // token has been expired try re auth
+    if (response.status === 403) {
+      headers.set('Authorization', `Bearer ${this.getToken(true)}`);
+      response = await fetch(url, fullOptions);
+
+      if (response.ok) {
+        const data = await response.json();
+        return <T>data;
+      }
+    }
 
     throw new Error(response.statusText);
+  }
+
+  private async getToken(hard = false): Promise<string> {
+    if (hard || config.accessToken === undefined) {
+      config.accessToken = (await this.auth()).accessToken;
+    }
+    return config.accessToken;
   }
 
   private async auth(): Promise<IAuthEntity> {

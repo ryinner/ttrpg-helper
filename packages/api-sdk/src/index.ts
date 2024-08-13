@@ -5,6 +5,4 @@ export * from './@types/collection';
 export * from './@types/language';
 export * from './@types/tag';
 export * from './@types/ttrpg';
-export { EBaseUrls, type IConfig } from './api/api';
-export * from './api/card';
-export * from './api/collection';
+export * from './api/index';

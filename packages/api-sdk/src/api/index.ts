@@ -1,29 +1,24 @@
-import type { ISignInDto } from '../@types/auth';
-import { createConfig } from './api';
+import { createConfig, type IConfig } from './api';
 import { CardApi } from './card';
 import { CollectionApi } from './collection';
 
 const modules = {
   cards: CardApi,
   collection: CollectionApi,
-  auth: CardApi,
 };
 
 type TModules = keyof typeof modules;
-type TModulesAvailableCreateSDKSettings = Exclude<TModules, 'auth'>;
 
-interface ICreateSDKSettings<
-  Modules extends TModulesAvailableCreateSDKSettings,
-> {
-  signIn: ISignInDto;
+interface ICreateSDKSettings<Modules extends TModules>
+  extends Omit<IConfig, 'accessToken'> {
   modules: Modules[];
 }
 
-type TSDK<Modules extends TModulesAvailableCreateSDKSettings> = {
+type TSDK<Modules extends TModules> = {
   [m in Modules]: InstanceType<(typeof modules)[m]>;
 };
 
-function createSDK<Modules extends TModulesAvailableCreateSDKSettings>({
+function createSDK<Modules extends TModules>({
   signIn,
   modules: modulesNames,
 }: ICreateSDKSettings<Modules>): TSDK<Modules> {
@@ -42,20 +37,4 @@ function createSDK<Modules extends TModulesAvailableCreateSDKSettings>({
   return app;
 }
 
-const sdk = createSDK({
-  signIn: {
-    username: 'test',
-    password: 'test',
-  },
-  modules: ['cards'],
-});
-
-sdk.cards
-  .getOne(1)
-  .then((res) => {
-    console.log(res);
-    return;
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+export { createSDK, type ICreateSDKSettings, type TModules };
