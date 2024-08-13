@@ -1,18 +1,20 @@
-import { CollectionApi, EBaseUrls, CardApi } from '@repo/api-sdk';
+import { createSDK } from '@repo/api-sdk';
 import { Markup, Telegraf } from 'telegraf';
-import { helpHandler } from './handlers/help.hanlder';
 import type { InlineKeyboardButton } from 'telegraf/types';
+import { helpHandler } from './handlers/help.hanlder';
 
 if (typeof process.env.BOT_TOKEN !== 'string') {
   throw new Error('Bot token is required');
 }
 
 const bot = new Telegraf(process.env.BOT_TOKEN);
-const collectionApi = new CollectionApi({
-  baseUrl: EBaseUrls.development,
-});
-const cardApi = new CardApi({
-  baseUrl: EBaseUrls.development,
+
+const api = createSDK({
+  signIn: {
+    username: process.env.SDK_USERNAME,
+    password: process.env.SDK_PASSWORD,
+  },
+  modules: ['cards', 'collection'],
 });
 
 const helloMessages = (username: string | undefined) => {
@@ -34,7 +36,7 @@ bot.start(async (ctx) => {
     await ctx.reply(message);
   }
 
-  const collections = await collectionApi.get();
+  const collections = await api.collection.get();
   const buttons = collections.map((collection) => {
     return [
       Markup.button.callback(collection.name, `collection-${collection.id}`),
@@ -48,7 +50,7 @@ bot.start(async (ctx) => {
 });
 
 async function cardsKeyboard(id: number) {
-  const cards = await collectionApi.cards(id);
+  const cards = await api.collection.cards(id);
   const buttons: InlineKeyboardButton[][] = [[]];
   cards.forEach((c, i) => {
     const button = Markup.button.callback(c.name, `card-${c.id}`);
@@ -77,7 +79,7 @@ bot.on('callback_query', async (ctx) => {
 
       case 'card':
         ctx.answerCbQuery();
-        ctx.sendMessage((await cardApi.getOne(Number(id))).description);
+        ctx.sendMessage((await api.cards.getOne(Number(id))).description);
         break;
       default:
         break;
