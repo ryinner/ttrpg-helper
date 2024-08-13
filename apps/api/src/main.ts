@@ -1,11 +1,12 @@
-import { HttpAdapterHost, NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import * as packageJson from '../package.json';
-import { PrismaClientExceptionFilter } from './prisma-client-exception/prisma-client-exception.filter';
 import { ConfigService } from '@nestjs/config';
+import { HttpAdapterHost, NestFactory } from '@nestjs/core';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as packageJson from '../package.json';
+import { AppModule } from './app.module';
 import { BaseConfig } from './config/base.config';
+import { IConfig } from './config/main.config';
+import { PrismaClientExceptionFilter } from './prisma-client-exception/prisma-client-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -26,7 +27,7 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('swagger-docs', app, document);
-  const configService = app.get(ConfigService);
+  const configService = app.get(ConfigService<IConfig>);
   await app.listen(configService.get<BaseConfig>('base').port);
 }
 bootstrap();

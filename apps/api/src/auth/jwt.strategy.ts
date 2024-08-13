@@ -1,5 +1,5 @@
 import { ClientsService } from '@/clients/clients.service';
-import { AuthConfig } from '@/config/auth.config';
+import { IConfig } from '@/config/main.config';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
@@ -8,13 +8,13 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
   constructor(
-    private configService: ConfigService,
+    private configService: ConfigService<IConfig>,
     private clientService: ClientsService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: configService.get<AuthConfig>('auth').jwt.secret,
+      secretOrKey: configService.get('auth').jwt.secret,
     });
   }
 

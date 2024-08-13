@@ -8,15 +8,14 @@ import { JWTAuthGuard } from './auth/jwt-auth.guard';
 import { CardsModule } from './cards/cards.module';
 import { ClientsModule } from './clients/clients.module';
 import { CollectionsModule } from './collections/collections.module';
-import { authConfig } from './config/auth.config';
-import baseConfig from './config/base.config';
+import { configs } from './config/main.config';
 import { PrismaModule } from './prisma/prisma.module';
 import { PrismaService } from './prisma/prisma.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      load: [baseConfig, authConfig],
+      load: configs,
       cache: true,
       isGlobal: true,
     }),

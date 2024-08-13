@@ -1,5 +1,6 @@
 import { ClientsModule } from '@/clients/clients.module';
 import { AuthConfig } from '@/config/auth.config';
+import { IConfig } from '@/config/main.config';
 import { PrismaModule } from '@/prisma/prisma.module';
 import { Module } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -15,7 +16,7 @@ import { JwtStrategy } from './jwt.strategy';
     PassportModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
-      useFactory: (config: ConfigService) => ({
+      useFactory: (config: ConfigService<IConfig>) => ({
         secret: config.get<AuthConfig>('auth').jwt.secret,
         signOptions: {
           expiresIn: '30m',
