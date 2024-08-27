@@ -1,10 +1,10 @@
+import { PrismaService } from '@/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
+import { Languages } from '@repo/api-sdk';
 import { CreateCardDto } from './dto/create-card.dto';
 import { UpdateCardDto } from './dto/update-card.dto';
-import { PrismaService } from '@/prisma/prisma.service';
-import { CreateCardMapper } from './mappers/create-card.mapper';
 import { CardEntity } from './entities/card.entity';
-import { Languages } from '@repo/api-sdk';
+import { CreateCardMapper } from './mappers/create-card.mapper';
 import { UpdateCardMapper } from './mappers/update-card.mapper';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class CardsService extends PrismaService {
       include: {
         translates: {
           where: {
-            languageId: createCardDto.languageId,
+            languageId: Languages.Russian,
           },
         },
       },
@@ -51,7 +51,7 @@ export class CardsService extends PrismaService {
             where: {
               cardId_languageId: {
                 cardId: id,
-                languageId: updateCardDto.languageId,
+                languageId: Languages.Russian,
               },
             },
           },

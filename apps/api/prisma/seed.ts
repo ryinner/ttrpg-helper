@@ -11,11 +11,9 @@ async function languages(): Promise<void> {
       data: [
         {
           id: Languages.Russian,
-          code: 'ru',
         },
         {
           id: Languages.English,
-          code: 'en',
         },
       ],
     });
