@@ -16,9 +16,7 @@ datasource db {
 // Systems Tables
 
 model Language {
-  id   Int    @id @default(autoincrement())
-  code String @db.VarChar(2)
-
+  id        String    @id @db.VarChar(2) /// Language code like en|ru
   createdAt DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
   updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamp(0)
 
@@ -40,7 +38,7 @@ model TTRPG {
 
 model TTRPGTranslate {
   id         Int       @id @default(autoincrement())
-  languageId Int       @map("language_id")
+  languageId String    @map("language_id") @db.VarChar(2)
   ttrpgId    Int       @map("table_top_role_playing_game_id")
   name       String
   nameShort  String    @map("name_short")
@@ -65,7 +63,7 @@ model Tag {
 
 model TagTrasnlate {
   id         Int       @id @default(autoincrement())
-  languageId Int       @map("language_id")
+  languageId String    @map("language_id") @db.VarChar(2)
   tagId      Int       @map("tag_id")
   name       String
   createdAt  DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
@@ -91,7 +89,7 @@ model Collection {
 
 model CollectionTranslate {
   id           Int       @id @default(autoincrement())
-  languageId   Int       @map("language_id")
+  languageId   String    @map("language_id") @db.VarChar(2)
   collectionId Int       @map("card_collection_id")
   name         String
   createdAt    DateTime? @default(now()) @map("created_at") @db.Timestamp(0)
@@ -116,7 +114,7 @@ model Card {
 
 model CardTranslate {
   id          Int       @id @default(autoincrement())
-  languageId  Int       @map("language_id")
+  languageId  String    @map("language_id") @db.VarChar(2)
   cardId      Int       @map("card_id")
   name        String
   description String    @db.Text

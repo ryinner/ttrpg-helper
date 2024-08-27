@@ -1,12 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { ICreateCardDto, Languages } from '@repo/api-sdk';
-import {
-  IsInt,
-  IsNotEmpty,
-  IsOptional,
-  IsString,
-  MaxLength,
-} from 'class-validator';
+import { ICreateCardDto } from '@repo/api-sdk';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 
 export class CreateCardDto implements ICreateCardDto {
   @IsString()
@@ -20,9 +14,4 @@ export class CreateCardDto implements ICreateCardDto {
   @MaxLength(512)
   @ApiProperty({ required: true, maxLength: 512 })
   description: string;
-
-  @IsInt()
-  @IsOptional()
-  @ApiProperty({ required: false })
-  languageId: number = Languages.Russian;
 }
