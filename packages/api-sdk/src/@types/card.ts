@@ -1,7 +1,6 @@
 interface ICreateCardDto {
   name: string;
   description: string;
-  languageId?: number;
 }
 
 interface IUpdateCardDto extends Partial<ICreateCardDto> {
@@ -14,4 +13,4 @@ interface ICardEntity {
   description: string;
 }
 
-export type { ICreateCardDto, IUpdateCardDto, ICardEntity };
+export type { ICardEntity, ICreateCardDto, IUpdateCardDto };
