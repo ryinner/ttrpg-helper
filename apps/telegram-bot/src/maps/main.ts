@@ -1,5 +1,5 @@
 import { Markup } from 'telegraf';
-import type { KeyboardButton } from 'telegraf/types';
+import type { InlineKeyboardButton } from 'telegraf/types';
 
 interface Ability {
   id: number;
@@ -10,25 +10,29 @@ interface Ability {
 class Character {
   public keyboard;
 
+  public abilities;
+
   constructor(
-    public id: number,
+    public id: string,
     public name: string,
-    public abilities: Ability[],
+    abilities: Ability[],
   ) {
     this.id = id;
     this.name = name;
-    this.abilities = abilities;
-    this.keyboard = Markup.keyboard(this.buttons);
+    this.abilities = new Map<string, Ability>(
+      abilities.map((a) => [a.id.toString(), a]),
+    );
+    this.keyboard = Markup.inlineKeyboard(this.buttons);
   }
 
   private get buttons() {
-    return this.abilities.reduce<KeyboardButton[][]>(
+    return Array.from(this.abilities.values()).reduce<InlineKeyboardButton[][]>(
       (buttons, ability, index) => {
         const button = Markup.button.callback(
           ability.name,
           `${this.id}-${ability.id}`,
         );
-        if (index % 2 < buttons.length) {
+        if (index % 2 === 1) {
           buttons.at(-1)?.push(button);
         } else {
           buttons.push([button]);
@@ -40,7 +44,7 @@ class Character {
   }
 }
 
-const warrior = new Character(1, 'Воин', [
+const warrior = new Character('1', 'Воин', [
   {
     id: 1,
     name: 'Странник',
@@ -79,6 +83,6 @@ const warrior = new Character(1, 'Воин', [
   },
 ]);
 
-const charactersMap = new Map<number, Character>([[warrior.id, warrior]]);
+const charactersMap = new Map<string, Character>([[warrior.id, warrior]]);
 
 export { charactersMap };

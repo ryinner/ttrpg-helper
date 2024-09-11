@@ -1,5 +1,6 @@
 import { Markup, type Telegraf } from 'telegraf';
-import { api } from '../utilities/api.utility';
+import { charactersMap } from '../maps/main';
+// import { api } from '../utilities/api.utility';
 
 function helloMessagesFactory(username: string | undefined): string[] {
   return [
@@ -17,13 +18,18 @@ export function startHandler(bot: Telegraf) {
       user: { username },
     } = await ctx.getChatMember(ctx.chat.id);
 
-    const collections = await api.collection.get();
-    const buttons = collections.map((collection) => {
-      return [
-        Markup.button.callback(collection.name, `collection-${collection.id}`),
-      ];
-    });
+    // const collections = await api.collection.get();
+    // const buttons = collections.map((collection) => {
+    //   return [
+    //     Markup.button.callback(collection.name, `collection-${collection.id}`),
+    //   ];
+    // });
 
+    // const keyboard = Markup.inlineKeyboard(buttons);
+
+    const buttons = Array.from(charactersMap.values()).map((character) => [
+      Markup.button.callback(character.name, character.id.toString()),
+    ]);
     const keyboard = Markup.inlineKeyboard(buttons);
 
     for (const message of helloMessagesFactory(username)) {

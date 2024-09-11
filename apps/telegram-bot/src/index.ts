@@ -1,6 +1,7 @@
 import { Telegraf } from 'telegraf';
-import { callbackQueryHandler } from './handlers/callback-query.handler';
+// import { callbackQueryHandler } from './handlers/callback-query.handler';
 import { helpHandler } from './handlers/help.handler';
+import { mvpCallbackHandler } from './handlers/mvp-callback-query.handler';
 import { startHandler } from './handlers/start.handler';
 
 if (typeof process.env.BOT_TOKEN !== 'string') {
@@ -11,7 +12,8 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 startHandler(bot);
 helpHandler(bot);
-callbackQueryHandler(bot);
+mvpCallbackHandler(bot);
+// callbackQueryHandler(bot);
 
 bot.launch();
 
