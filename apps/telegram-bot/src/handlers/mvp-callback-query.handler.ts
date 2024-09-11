@@ -15,7 +15,7 @@ export function mvpCallbackHandler(bot: Telegraf) {
       }
       if (abilityId === undefined) {
         ctx.answerCbQuery();
-        const message = await ctx.sendMessage('Персонаж выбран!', {
+        const message = await ctx.sendMessage(`Персонаж выбран: ${character.name}!`, {
           reply_markup: character.keyboard.reply_markup,
         });
         ctx.pinChatMessage(message.message_id);
@@ -28,8 +28,6 @@ export function mvpCallbackHandler(bot: Telegraf) {
       ctx.answerCbQuery();
       await ctx.sendMessage(`*${ability.name}*\n\n${ability.description}`, {
         parse_mode: 'Markdown',
-      });
-      await ctx.sendMessage('Ваш персонаж:', {
         reply_markup: character.keyboard.reply_markup,
       });
     }
