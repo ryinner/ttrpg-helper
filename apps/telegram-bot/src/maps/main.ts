@@ -243,10 +243,19 @@ const bard = new Character('bard', 'Бард', [
   },
 ]);
 
+const paladin = new Character('paladin', 'Паладин', []);
+
+const priest = new Character('priest', 'Жрец', []);
+
+const wizard = new Character('wizard', 'Волшебник', []);
+
 const charactersMap = new Map<string, Character>([
   [warrior.id, warrior],
   [rogue.id, rogue],
   [bard.id, bard],
+  [paladin.id, paladin],
+  [priest.id, priest],
+  [wizard.id, wizard],
 ]);
 
 export { charactersMap };
