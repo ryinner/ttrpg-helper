@@ -29,6 +29,9 @@ export function mvpCallbackHandler(bot: Telegraf) {
       await ctx.sendMessage(`*${ability.name}*\n\n${ability.description}`, {
         parse_mode: 'Markdown',
       });
+      await ctx.sendMessage('Ваш персонаж:', {
+        reply_markup: character.keyboard.reply_markup,
+      });
     }
   });
 }
