@@ -3,7 +3,6 @@ import { charactersMap } from '../maps/main';
 
 export function mvpCallbackHandler(bot: Telegraf) {
   bot.on('callback_query', async (ctx) => {
-    console.log('callback');
     if ('data' in ctx.callbackQuery) {
       const { data } = ctx.callbackQuery;
       const [characterId, abilityId] = data.split('-');
