@@ -2,7 +2,7 @@ import { Markup } from 'telegraf';
 import type { InlineKeyboardButton } from 'telegraf/types';
 
 interface Ability {
-  id: number;
+  id?: number;
   name: string;
   description: string;
 }
@@ -20,7 +20,7 @@ class Character {
     this.id = id;
     this.name = name;
     this.abilities = new Map<string, Ability>(
-      abilities.map((a) => [a.id.toString(), a]),
+      abilities.map((a, i) => [i.toString(), a]),
     );
     this.keyboard = Markup.inlineKeyboard(this.buttons);
   }
@@ -173,7 +173,7 @@ const bard = new Character('bard', 'Бард', [
     id: 7,
     name: 'Заговор: Чудотворство',
     description:
-      'Компонент: В\n\nВремя: 1мин\n\nДлительность: 1мин\n\n Можно сотворить небольшое чудо:\n- Голос в три раза громче;\n- Пламя мерцает и меняет цвет;\n- Дрожь в полу;\n- Мгновенный звук из точки в пределах 30 футов;\n- Изменение внешнего вида глаз;\n- Открыть или закрыть окно или дверь.',
+      'Компонент: В\n\nВремя: 1мин\n\nДлительность: 1мин\n\nМожно сотворить небольшое чудо:\n- Голос в три раза громче;\n- Пламя мерцает и меняет цвет;\n- Дрожь в полу;\n- Мгновенный звук из точки в пределах 30 футов;\n- Изменение внешнего вида глаз;\n- Открыть или закрыть окно или дверь.',
   },
   {
     id: 8,
