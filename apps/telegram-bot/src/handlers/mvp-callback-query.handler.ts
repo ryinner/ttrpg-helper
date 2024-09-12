@@ -15,13 +15,9 @@ export function mvpCallbackHandler(bot: Telegraf) {
       }
       if (abilityId === undefined) {
         ctx.answerCbQuery();
-        const message = await ctx.sendMessage(
-          `Персонаж выбран: ${character.name}!`,
-          {
-            reply_markup: character.keyboard.reply_markup,
-          },
-        );
-        ctx.pinChatMessage(message.message_id);
+        await ctx.sendMessage(`Персонаж выбран: ${character.name}!`, {
+          reply_markup: character.keyboard.reply_markup,
+        });
         return;
       }
       const ability = character.abilities.get(abilityId);

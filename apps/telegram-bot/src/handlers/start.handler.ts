@@ -6,9 +6,8 @@ function helloMessagesFactory(username: string | undefined): string[] {
   return [
     `Привет ${username ?? 'друг'}!`,
     'Добро пожаловать в тестовую версию помощника мастера!',
-    'Я создан для того, чтобы помогать мастерам и игрокам проводить игры :)',
-    'Пока что я умею только выдавать небольшие колоды карт для упрощения объяснения способностей персонажей: Но я готов учится и развиваться, и я буду очень рад, если ты поможешь мне в этом!',
-    'Выбери интересующую тебя колоду снизу.',
+    'Я создан для того, чтобы помогать мастерам и игрокам проводить хорошо проводить в НРИ :)',
+    'Пока что я умею только выдавать информацию о способностях персонажей. Но я готов учится и развиваться, и я буду очень рад, если ты поможешь мне в этом!',
   ];
 }
 
@@ -34,10 +33,17 @@ export function startHandler(bot: Telegraf) {
 
     for (const message of helloMessagesFactory(username)) {
       await ctx.reply(message);
+      await wait(500);
     }
 
-    await ctx.sendMessage('Выбери свою колоду', {
+    await ctx.sendMessage('Выбери своего героя', {
       reply_markup: keyboard.reply_markup,
     });
+  });
+}
+
+async function wait(timeout = 1000): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout);
   });
 }
