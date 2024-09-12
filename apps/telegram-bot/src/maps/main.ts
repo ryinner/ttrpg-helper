@@ -2,7 +2,6 @@ import { Markup } from 'telegraf';
 import type { InlineKeyboardButton } from 'telegraf/types';
 
 interface Ability {
-  id?: number;
   name: string;
   description: string;
 }
