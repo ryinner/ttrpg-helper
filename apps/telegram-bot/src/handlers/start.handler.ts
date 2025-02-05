@@ -1,4 +1,5 @@
 import { Markup, type Telegraf } from 'telegraf';
+import type { InlineKeyboardButton } from 'telegraf/types';
 import { charactersMap } from '../maps/main';
 // import { api } from '../utilities/api.utility';
 
@@ -26,9 +27,18 @@ export function startHandler(bot: Telegraf) {
 
     // const keyboard = Markup.inlineKeyboard(buttons);
 
-    const buttons = Array.from(charactersMap.values()).map((character) => [
-      Markup.button.callback(character.name, character.id.toString()),
-    ]);
+    const buttons = Array.from(charactersMap.values()).reduce<
+      InlineKeyboardButton[][]
+    >((buttons, character, index) => {
+      const button = Markup.button.callback(character.name, `${character.id}`);
+      if (index % 2 === 1) {
+        buttons.at(-1)?.push(button);
+      } else {
+        buttons.push([button]);
+      }
+      return buttons;
+    }, []);
+
     const keyboard = Markup.inlineKeyboard(buttons);
 
     for (const message of helloMessagesFactory(username)) {
