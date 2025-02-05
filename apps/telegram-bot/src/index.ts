@@ -14,6 +14,10 @@ startHandler(bot);
 helpHandler(bot);
 mvpCallbackHandler(bot);
 // callbackQueryHandler(bot);
+bot.telegram.setMyCommands([
+  { command: '/start', description: 'Start work with bot' },
+  { command: '/help', description: 'Get help info' },
+]);
 
 bot.launch();
 
