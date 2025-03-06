@@ -43,7 +43,7 @@ export function startHandler(bot: Telegraf) {
 
     for (const message of helloMessagesFactory(username)) {
       await ctx.reply(message);
-      await wait(500);
+      await wait(200);
     }
 
     await ctx.sendMessage('Выбери своего героя', {
