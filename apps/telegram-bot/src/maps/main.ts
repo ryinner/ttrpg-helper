@@ -732,6 +732,8 @@ const sorcerer = new Character('sorcerer', 'Чародей', [
   },
 ]);
 
+// barbarian, ranger, warlock, druid, artificer
+
 const charactersMap = new Map<string, Character>([
   [warrior.id, warrior],
   [rogue.id, rogue],
