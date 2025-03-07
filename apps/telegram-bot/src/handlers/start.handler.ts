@@ -1,6 +1,5 @@
-import { Markup, type Telegraf } from 'telegraf';
-import type { InlineKeyboardButton } from 'telegraf/types';
-import { charactersMap } from '../maps/main';
+import { type Telegraf } from 'telegraf';
+import { sendHeroesList } from './heroes.handler.js';
 // import { api } from '../utilities/api.utility';
 
 function helloMessagesFactory(username: string | undefined): string[] {
@@ -27,28 +26,12 @@ export function startHandler(bot: Telegraf) {
 
     // const keyboard = Markup.inlineKeyboard(buttons);
 
-    const buttons = Array.from(charactersMap.values()).reduce<
-      InlineKeyboardButton[][]
-    >((buttons, character, index) => {
-      const button = Markup.button.callback(character.name, `${character.id}`);
-      if (index % 2 === 1) {
-        buttons.at(-1)?.push(button);
-      } else {
-        buttons.push([button]);
-      }
-      return buttons;
-    }, []);
-
-    const keyboard = Markup.inlineKeyboard(buttons);
-
     for (const message of helloMessagesFactory(username)) {
       await ctx.reply(message);
       await wait(200);
     }
 
-    await ctx.sendMessage('Выбери своего героя', {
-      reply_markup: keyboard.reply_markup,
-    });
+    sendHeroesList(ctx);
   });
 }
 

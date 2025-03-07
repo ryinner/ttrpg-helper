@@ -1,6 +1,7 @@
 import { Telegraf } from 'telegraf';
 // import { callbackQueryHandler } from './handlers/callback-query.handler';
 import { helpHandler } from './handlers/help.handler';
+import { heroesHandler } from './handlers/heroes.handler.js';
 import { mvpCallbackHandler } from './handlers/mvp-callback-query.handler';
 import { startHandler } from './handlers/start.handler';
 
@@ -12,11 +13,13 @@ const bot = new Telegraf(process.env.BOT_TOKEN);
 
 startHandler(bot);
 helpHandler(bot);
+heroesHandler(bot);
 mvpCallbackHandler(bot);
 // callbackQueryHandler(bot);
 bot.telegram.setMyCommands([
-  { command: '/start', description: 'Start work with bot' },
-  { command: '/help', description: 'Get help info' },
+  { command: '/start', description: 'Начать работу с ботом' },
+  { command: '/help', description: 'Помощь' },
+  { command: '/heroes', description: 'Получить всех персонажей' },
 ]);
 
 bot.launch();
